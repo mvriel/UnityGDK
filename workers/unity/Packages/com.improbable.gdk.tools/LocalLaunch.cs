@@ -29,7 +29,10 @@ namespace Improbable.Gdk.Tools
         private static void LaunchMenu()
         {
             Debug.Log("Launching SpatialOS locally...");
-            EditorApplication.delayCall += Launch;
+            EditorApplication.delayCall += () =>
+            {
+                Launch();
+            };
         }
 
         public static void BuildConfig()
@@ -42,13 +45,13 @@ namespace Improbable.Gdk.Tools
             }
         }
 
-        public static void Launch()
+        public static Process Launch()
         {
             BuildConfig();
 
             var command = Common.SpatialBinary;
             var commandArgs = "local launch";
-            
+
             if (Application.platform == RuntimePlatform.OSXEditor)
             {
                 command = "osascript";
@@ -67,7 +70,7 @@ namespace Improbable.Gdk.Tools
             if (process == null)
             {
                 Debug.LogError("Failed to start SpatialOS locally.");
-                return;
+                return null;
             }
 
             process.EnableRaisingEvents = true;
@@ -107,6 +110,8 @@ namespace Improbable.Gdk.Tools
                 process.Dispose();
                 process = null;
             };
+
+            return process;
         }
 
         private static bool WasProcessKilled(Process process)

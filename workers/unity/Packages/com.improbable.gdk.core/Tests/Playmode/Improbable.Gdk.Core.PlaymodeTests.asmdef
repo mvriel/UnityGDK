@@ -1,6 +1,11 @@
 {
     "name": "Improbable.Gdk.Core.PlaymodeTests",
-    "references": [],
+    "references": [
+        "Unity.Entities",
+        "Improbable.Gdk.Core",
+        "Improbable.Gdk.Tools",
+        "Improbable.Gdk.TestUtils"
+    ],
     "optionalUnityReferences": [
         "TestAssemblies"
     ],
