@@ -7,6 +7,8 @@ namespace Improbable.Gdk.Core
         public string ReceptionistHost = RuntimeConfigDefaults.ReceptionistHost;
         public ushort ReceptionistPort = RuntimeConfigDefaults.ReceptionistPort;
 
+        private const string AndroidEmulatorHostDeviceIp = "10.0.2.2";
+
         public override void Validate()
         {
             ValidateConfig(ReceptionistHost, RuntimeConfigNames.ReceptionistHost);
@@ -26,6 +28,23 @@ namespace Improbable.Gdk.Core
             config.WorkerType = CommandLineUtility.GetCommandLineValue(
                 parsedArgs, RuntimeConfigNames.WorkerType, string.Empty);
             return config;
+        }
+        public static ReceptionistConfig CreateConnectionConfigForAndroidEmulator()
+        {
+            return new ReceptionistConfig
+            {
+                ReceptionistHost = AndroidEmulatorHostDeviceIp,
+                UseExternalIp = true
+            };
+        }
+
+        public static ReceptionistConfig CreateConnectionConfigForPhysicalAndroid(string ip)
+        {
+            return new ReceptionistConfig
+            {
+                ReceptionistHost = ip,
+                UseExternalIp = true
+            };
         }
     }
 }

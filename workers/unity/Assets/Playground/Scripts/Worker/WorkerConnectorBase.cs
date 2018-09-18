@@ -3,6 +3,9 @@ using System.Collections;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+#if UNITY_ANDROID
+using Improbable.Gdk.Android;
+#endif
 using Improbable.Gdk.Core;
 using Improbable.Worker.Core;
 using Unity.Entities;
@@ -106,17 +109,39 @@ namespace Playground
             }
             else
             {
-                var commandLineArguments = Environment.GetCommandLineArgs();
-                var commandLineArgs = CommandLineUtility.ParseCommandLineArgs(commandLineArguments);
-                config = ReceptionistConfig.CreateConnectionConfigFromCommandLine(commandLineArgs);
-                config.WorkerType = workerType;
-                config.UseExternalIp = UseExternalIp;
-                if (!commandLineArgs.ContainsKey(RuntimeConfigNames.WorkerId))
+#if UNITY_ANDROID
+                if (Application.isMobilePlatform)
                 {
-                    config.WorkerId = $"{workerType}-{Guid.NewGuid()}";
+                    if (DeviceInfo.IsAndroidStudioEmulator())
+                    {
+                        config = ReceptionistConfig.CreateConnectionConfigForAndroidEmulator();
+                        config.WorkerType = workerType;
+                        config.WorkerId = $"{workerType}-{Guid.NewGuid()}";
+                    }
+                    else
+                    {
+                        // TODO need to stop hardcoding ip
+                        config = ReceptionistConfig.CreateConnectionConfigForPhysicalAndroid("172.16.2.52");
+                        config.WorkerType = workerType;
+                        config.WorkerId = $"{workerType}-{Guid.NewGuid()}";
+                    }
                 }
+                else
+                {
+#endif
+                var commandLineArguments = Environment.GetCommandLineArgs();
+                    var commandLineArgs = CommandLineUtility.ParseCommandLineArgs(commandLineArguments);
+                    config = ReceptionistConfig.CreateConnectionConfigFromCommandLine(commandLineArgs);
+                    config.WorkerType = workerType;
+                    config.UseExternalIp = UseExternalIp;
+                    if (!commandLineArgs.ContainsKey(RuntimeConfigNames.WorkerId))
+                    {
+                        config.WorkerId = $"{workerType}-{Guid.NewGuid()}";
+                    }
+                }
+#if UNITY_ANDROID
             }
-
+#endif
             return config;
         }
 
