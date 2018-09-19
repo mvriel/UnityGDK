@@ -32,9 +32,9 @@ namespace Improbable.Gdk.Core
             return EntityIdToEntity.TryGetValue(entityId, out entity);
         }
 
-        protected override void OnCreateManager()
+        protected override void OnCreateManager(int capacity)
         {
-            base.OnCreateManager();
+            base.OnCreateManager(capacity);
             var entityManager = World.GetOrCreateManager<EntityManager>();
             WorkerEntity = entityManager.CreateEntity(typeof(OnConnected), typeof(WorkerEntityTag));
             Enabled = false;

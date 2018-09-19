@@ -26,7 +26,7 @@ namespace Improbable.Gdk.TransformSynchronization
         private struct Data
         {
             public readonly int Length;
-            public BufferArray<BufferedTransform> TransformBuffer;
+            public ComponentArray<BufferedTransform> TransformBuffer;
             public ComponentDataArray<DefferedUpdateTransform> LastTransformValue;
             public ComponentDataArray<TicksSinceLastTransformUpdate> TicksSinceLastUpdate;
             [ReadOnly] public ComponentDataArray<TransformInternal.ReceivedUpdates> Updates;
@@ -44,17 +44,17 @@ namespace Improbable.Gdk.TransformSynchronization
         {
             for (int i = 0; i < data.Length; ++i)
             {
-                var transformBuffer = data.TransformBuffer[i];
+                var transformBuffer = data.TransformBuffer[i].Elements;
                 var lastTransformApplied = data.LastTransformValue[i].Transform;
 
                 // todo enable smear
                 // Need to take smear into account here when it's turned on
-                if (transformBuffer.Length >= TransformSynchronizationConfig.MaxLoadMatchedBufferSize)
+                if (transformBuffer.Count >= TransformSynchronizationConfig.MaxLoadMatchedBufferSize)
                 {
                     transformBuffer.Clear();
                 }
 
-                if (transformBuffer.Length == 0)
+                if (transformBuffer.Count == 0)
                 {
                     var currentTransformComponent = data.CurrentTransform[i];
                     if (currentTransformComponent.PhysicsTick <= lastTransformApplied.PhysicsTick)
@@ -74,8 +74,8 @@ namespace Improbable.Gdk.TransformSynchronization
                     // math.min(lastTransformApplied.TicksPerSecond / tickRateSystem.PhysicsTicksPerRealSecond,
                     //     TransformSynchronizationConfig.MaxTickSmearFactor);
 
-                    uint ticksToFill = math.max(
-                        (uint) (TransformSynchronizationConfig.TargetLoadMatchedBufferSize * tickSmearFactor), 1);
+                    uint ticksToFill = (uint)math.max(
+                         (TransformSynchronizationConfig.TargetLoadMatchedBufferSize * tickSmearFactor), 1);
 
                     if (ticksToFill > 1)
                     {
@@ -121,7 +121,7 @@ namespace Improbable.Gdk.TransformSynchronization
 
                     var transformToInterpolateTo = ToBufferedTransform(lastTransformApplied);
 
-                    var transformToInterpolateFrom = transformBuffer[transformBuffer.Length - 1];
+                    var transformToInterpolateFrom = transformBuffer[transformBuffer.Count - 1];
                     uint lastTickId = transformToInterpolateFrom.PhysicsTick;
 
                     uint remoteTickDifference = transformToInterpolateTo.PhysicsTick - lastTickId;
@@ -131,7 +131,7 @@ namespace Improbable.Gdk.TransformSynchronization
                     }
 
                     uint ticksToFill =
-                        math.max((uint) ((transformToInterpolateTo.PhysicsTick - lastTickId) * tickSmearFactor), 1);
+                        (uint) math.max( ((transformToInterpolateTo.PhysicsTick - lastTickId) * tickSmearFactor), 1);
                     for (uint j = 0; j < ticksToFill - 1; ++j)
                     {
                         transformBuffer.Add(InterpolateValues(transformToInterpolateFrom, transformToInterpolateTo,
@@ -171,9 +171,9 @@ namespace Improbable.Gdk.TransformSynchronization
             }
         }
 
-        private static BufferedTransform ToBufferedTransform(TransformInternal.Component transform)
+        private static BufferedTransformElement ToBufferedTransform(TransformInternal.Component transform)
         {
-            return new BufferedTransform
+            return new BufferedTransformElement
             {
                 Position = transform.Location.ToUnityVector3(),
                 Velocity = transform.Velocity.ToUnityVector3(),
@@ -182,9 +182,9 @@ namespace Improbable.Gdk.TransformSynchronization
             };
         }
 
-        private static BufferedTransform ToBufferedTransformAtTick(TransformInternal.Component component, uint tick)
+        private static BufferedTransformElement ToBufferedTransformAtTick(TransformInternal.Component component, uint tick)
         {
-            return new BufferedTransform
+            return new BufferedTransformElement
             {
                 Position = component.Location.ToUnityVector3(),
                 Velocity = component.Velocity.ToUnityVector3(),
@@ -193,11 +193,11 @@ namespace Improbable.Gdk.TransformSynchronization
             };
         }
 
-        private static BufferedTransform InterpolateValues(BufferedTransform first, BufferedTransform second,
+        private static BufferedTransformElement InterpolateValues(BufferedTransformElement first, BufferedTransformElement second,
             uint ticksAfterFirst)
         {
             float t = (float) ticksAfterFirst / (float) (second.PhysicsTick - first.PhysicsTick);
-            return new BufferedTransform
+            return new BufferedTransformElement
             {
                 Position = Vector3.Lerp(first.Position, second.Position, t),
                 Velocity = Vector3.Lerp(first.Velocity, second.Velocity, t),

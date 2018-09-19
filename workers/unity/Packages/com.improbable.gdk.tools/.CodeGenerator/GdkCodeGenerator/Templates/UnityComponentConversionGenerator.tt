@@ -518,21 +518,13 @@ namespace <#= qualifiedNamespace #>
             private CommandStorages.<#= commandDetails.CommandName#> <#= commandDetails.CamelCaseCommandName #>Storage;
 <# } #>
 
-            private EntityArchetypeQuery[] CommandQueries =
-            {
+public override ComponentType[] CommandTypes => new ComponentType[] {
 <# foreach (var commandDetails in commandDetailsList) { #>
-                new EntityArchetypeQuery()
-                {
-                    All = new[]
-                    {
-                        ComponentType.Create<<#= qualifiedNamespace #>.<#= componentDetails.ComponentName #>.CommandSenders.<#= commandDetails.CommandName #>>(),
-                        ComponentType.Create<<#= qualifiedNamespace #>.<#= componentDetails.ComponentName #>.CommandResponders.<#= commandDetails.CommandName #>>(),
-                    },
-                    Any = Array.Empty<ComponentType>(),
-                    None = Array.Empty<ComponentType>(),
-                },
+            ComponentType.ReadOnly<<#= qualifiedNamespace #>.<#= componentDetails.ComponentName #>.CommandSenders.<#= commandDetails.CommandName #>>(),
+            ComponentType.ReadOnly<<#= qualifiedNamespace #>.<#= componentDetails.ComponentName #>.CommandResponders.<#= commandDetails.CommandName #>>(),
 <# } #>
-            };
+};
+
 
             public ComponentReplicator(EntityManager entityManager, Unity.Entities.World world) : base(entityManager)
             {
@@ -590,9 +582,8 @@ namespace <#= qualifiedNamespace #>
                 }
             }
 
-            public override void SendCommands(SpatialOSSendSystem sendSystem, global::Improbable.Worker.Core.Connection connection)
+            public override void SendCommands(List<ComponentGroup> commandComponentGroups, global::Improbable.Worker.Core.Connection connection)
             {
-                var entityType = sendSystem.GetArchetypeChunkEntityType();
 <#
 for (var i = 0; i < commandDetailsList.Count; i++) {
     var commandDetails = commandDetailsList[i];
@@ -600,64 +591,74 @@ for (var i = 0; i < commandDetailsList.Count; i++) {
     var commandResponderType = $"{qualifiedNamespace}.{componentDetails.ComponentName}.CommandResponders.{commandDetails.CommandName}";
 #>
                 {
-                    var senderType = sendSystem.GetArchetypeChunkComponentType<<#= commandSenderType #>>(true);
-                    var responderType = sendSystem.GetArchetypeChunkComponentType<<#= commandResponderType #>>(true);
-
-                    var chunks = EntityManager.CreateArchetypeChunkArray(CommandQueries[<#= i #>], Allocator.TempJob);
-                    foreach (var chunk in chunks)
+                    if (!commandComponentGroups[<#= 2*i #>].IsEmptyIgnoreFilter)
                     {
-                        var entities = chunk.GetNativeArray(entityType);
-                        var senders = chunk.GetNativeArray(senderType);
-                        var responders = chunk.GetNativeArray(responderType);
-                        for (var i = 0; i < senders.Length; i++)
-                        {
-                            var requests = senders[i].RequestsToSend;
-                            var responses = responders[i].ResponsesToSend;
-                            if (requests.Count > 0)
-                            {
-                                foreach (var request in requests)
-                                {
-                                    var schemaCommandRequest = new global::Improbable.Worker.Core.SchemaCommandRequest(ComponentId, <#= commandDetails.CommandIndex #>);
-                                    <#= commandDetails.FqnRequestType #>.Serialization.Serialize(request.Payload, schemaCommandRequest.GetObject());
 
-                                    var requestId = connection.SendCommandRequest(request.TargetEntityId,
-                                        new global::Improbable.Worker.Core.CommandRequest(schemaCommandRequest),
-                                        request.TimeoutMillis,
-                                        request.AllowShortCircuiting ? ShortCircuitParameters : null);
+                        var componentGroup = commandComponentGroups[<#= 2*i #>];
+                        var commandSenderDataArray = componentGroup.GetComponentDataArray<<#= commandSenderType #>>();
+                        var entityArray = componentGroup.GetEntityArray();
+                         for (var j = 0; j < commandSenderDataArray.Length; j++)
+                         {
+                             var requests = commandSenderDataArray[j].RequestsToSend;
+                             var count = requests.Count;
+                             if (count == 0)
+                             {
+                                continue;
+                             }
 
-                                    <#= commandDetails.CamelCaseCommandName #>Storage.CommandRequestsInFlight[requestId.Id] =
-                                        new CommandRequestStore<<#= commandDetails.FqnRequestType #>>(entities[i], request.Payload, request.Context, request.RequestId);
-                                }
+                             for (var k = 0; k < count; k++)
+                             {
+                                 var wrappedCommandRequest = requests[k];
+                                 var schemaCommandRequest = new global::Improbable.Worker.Core.SchemaCommandRequest(ComponentId, <#= commandDetails.CommandIndex #>);
+                                 <#= commandDetails.FqnRequestType #>.Serialization.Serialize(wrappedCommandRequest.Payload, schemaCommandRequest.GetObject());
+                                 var requestId = connection.SendCommandRequest(wrappedCommandRequest.TargetEntityId,
+                                 new global::Improbable.Worker.Core.CommandRequest(schemaCommandRequest),
+                                 wrappedCommandRequest.TimeoutMillis,
+                                 wrappedCommandRequest.AllowShortCircuiting ? ShortCircuitParameters : null);
+                                  <#= commandDetails.CamelCaseCommandName #>Storage.CommandRequestsInFlight[requestId.Id] =
+                                  new CommandRequestStore<<#= commandDetails.FqnRequestType #>>(entityArray[j], wrappedCommandRequest.Payload, wrappedCommandRequest.Context, wrappedCommandRequest.RequestId);
 
-                                requests.Clear();
-                            }
-
-                            if (responses.Count > 0)
-                            {
-                                foreach (var response in responses)
-                                {
-                                    var requestId = new global::Improbable.Worker.Core.RequestId<IncomingCommandRequest>(response.RequestId);
-
-                                    if (response.FailureMessage != null)
-                                    {
-                                        // Send a command failure if the string is non-null.
-                                        connection.SendCommandFailure(requestId, response.FailureMessage);
-                                        continue;
-                                    }
-
-                                    var schemaCommandResponse = new global::Improbable.Worker.Core.SchemaCommandResponse(ComponentId, <#= commandDetails.CommandIndex #>);
-                                    <#= commandDetails.FqnResponseType #>.Serialization.Serialize(response.Payload.Value, schemaCommandResponse.GetObject());
-
-                                    connection.SendCommandResponse(requestId, new global::Improbable.Worker.Core.CommandResponse(schemaCommandResponse));
-                                }
-
-                                responses.Clear();
-                            }
-                        }
+                             }
+                             requests.Clear();
+                             }
+                         }
                     }
+               
 
-                    chunks.Dispose();
-                }
+                               {
+                    if (!commandComponentGroups[<#= 2*i + 1 #>].IsEmptyIgnoreFilter)
+                    {
+
+                        var componentGroup = commandComponentGroups[<#= 2*i + 1 #>];
+                        var commandResponderDataArray = componentGroup.GetComponentDataArray<<#= commandResponderType #>>();
+                        var entityArray = componentGroup.GetEntityArray();
+                         for (var j = 0; j < commandResponderDataArray.Length; j++)
+                         {
+                             var responses = commandResponderDataArray[j].ResponsesToSend;
+                             var count = responses.Count;
+                             if (count == 0)
+                             {
+                                continue;
+                             }
+
+                             for (var k = 0; k < count; k++)
+                             {
+                                 var wrappedCommandResponse = responses[k];
+                                 var requestId =new global::Improbable.Worker.Core.RequestId<IncomingCommandRequest>(wrappedCommandResponse.RequestId);
+                                 if (wrappedCommandResponse.FailureMessage != null)
+                                 {
+                                 connection.SendCommandFailure(requestId, wrappedCommandResponse.FailureMessage);
+                                 continue;
+                                 }
+                                 var schemaCommandResponse = new global::Improbable.Worker.Core.SchemaCommandResponse(ComponentId, <#= commandDetails.CommandIndex #>);
+                                 <#= commandDetails.FqnResponseType #>.Serialization.Serialize(wrappedCommandResponse.Payload.Value, schemaCommandResponse.GetObject());
+                                 connection.SendCommandResponse(requestId, new global::Improbable.Worker.Core.CommandResponse(schemaCommandResponse));
+                             }
+                             responses.Clear();
+                             }
+                         }
+                    }
+               
 <# } #>
             }
         }

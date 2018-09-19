@@ -20,10 +20,11 @@ namespace Improbable.Gdk.Core
         private readonly HashSet<Type> typesToRemove = new HashSet<Type>();
 
         private readonly List<(ComponentGroup, ComponentType)> componentGroupsToRemove = new List<(ComponentGroup, ComponentType)>();
+        private readonly List<(Entity, ComponentType)> componentsToRemove = new List<(Entity, ComponentType)>();
 
-        protected override void OnCreateManager()
+        protected override void OnCreateManager(int capacity)
         {
-            base.OnCreateManager();
+            base.OnCreateManager(capacity);
             GenerateComponentGroups();
         }
 
@@ -102,8 +103,13 @@ namespace Improbable.Gdk.Core
                 var entityArray = componentGroup.GetEntityArray();
                 for (var i = 0; i < entityArray.Length; i++)
                 {
-                    PostUpdateCommands.RemoveComponent(entityArray[i], componentType);
+                    componentsToRemove.Add((entityArray[i], componentType));
                 }
+            }
+
+            foreach ((var entity, var type) in componentsToRemove)
+            {
+                EntityManager.RemoveComponent(entity, type);
             }
         }
 

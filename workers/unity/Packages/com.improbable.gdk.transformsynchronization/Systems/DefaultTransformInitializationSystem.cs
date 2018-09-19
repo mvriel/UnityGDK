@@ -1,4 +1,4 @@
-﻿using Improbable.Gdk.Core;
+using Improbable.Gdk.Core;
 using Improbable.Transform;
 using Unity.Collections;
 using Unity.Entities;
@@ -32,6 +32,14 @@ namespace Improbable.Gdk.TransformSynchronization
 
         [Inject] private Data data;
         [Inject] private WorkerSystem worker;
+
+        private ViewCommandBuffer commandBuffer;
+        protected override void OnCreateManager(int capacity)
+        {
+            base.OnCreateManager(capacity);
+
+            commandBuffer = new ViewCommandBuffer(World.GetOrCreateManager<EntityManager>(), worker.LogDispatcher);
+        }
 
         protected override void OnUpdate()
         {
@@ -77,8 +85,10 @@ namespace Improbable.Gdk.TransformSynchronization
                 PostUpdateCommands.AddComponent(data.Entity[i], ticksSinceLastUpdate);
                 PostUpdateCommands.AddComponent(data.Entity[i], lastPosition);
                 PostUpdateCommands.AddComponent(data.Entity[i], lastTransform);
-                PostUpdateCommands.AddBuffer<BufferedTransform>(data.Entity[i]);
+                commandBuffer.AddComponent(data.Entity[i], new BufferedTransform());
             }
+
+            commandBuffer.FlushBuffer();
         }
     }
 }

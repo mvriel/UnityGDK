@@ -1,10 +1,15 @@
+using System.Collections.Generic;
 using Unity.Entities;
 using UnityEngine;
 
 namespace Improbable.Gdk.TransformSynchronization
 {
-    [InternalBufferCapacity(TransformSynchronizationConfig.MaxLoadMatchedBufferSize)]
-    public struct BufferedTransform : IBufferElementData
+    public class BufferedTransform : Component
+    {
+        public List<BufferedTransformElement> Elements;
+    }
+
+    public struct BufferedTransformElement : IComponentData
     {
         public Vector3 Position;
         public Vector3 Velocity;

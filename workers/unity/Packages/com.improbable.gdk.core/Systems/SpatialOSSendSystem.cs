@@ -18,10 +18,9 @@ namespace Improbable.Gdk.Core
         private readonly List<ComponentReplicator> componentReplicators =
             new List<ComponentReplicator>();
 
-        protected override void OnCreateManager()
+        protected override void OnCreateManager(int capacity)
         {
-            base.OnCreateManager();
-
+            base.OnCreateManager(capacity);
             connection = World.GetExistingManager<WorkerSystem>().Connection;
 
             PopulateDefaultComponentReplicators();
@@ -48,7 +47,7 @@ namespace Improbable.Gdk.Core
 
             foreach (var replicator in componentReplicators)
             {
-                replicator.Execute(this, connection);
+                replicator.Execute(connection);
             }
         }
 
@@ -60,6 +59,8 @@ namespace Improbable.Gdk.Core
                 Handler = componentReplicationHandler,
                 ReplicationComponentGroup =
                     GetComponentGroup(componentReplicationHandler.ReplicationComponentTypes),
+                CommandReplicationGroups = componentReplicationHandler.CommandTypes
+                    .Select(componentType => GetComponentGroup(componentType)).ToList()
             });
         }
 
@@ -86,11 +87,12 @@ namespace Improbable.Gdk.Core
             public uint ComponentId;
             public ComponentReplicationHandler Handler;
             public ComponentGroup ReplicationComponentGroup;
+            public List<ComponentGroup> CommandReplicationGroups;
 
-            public void Execute(SpatialOSSendSystem sendSystem, Connection connection)
+            public void Execute(Connection connection)
             {
                 Handler.ExecuteReplication(ReplicationComponentGroup, connection);
-                Handler.SendCommands(sendSystem, connection);
+                Handler.SendCommands(CommandReplicationGroups, connection);
             }
         }
     }

@@ -24,9 +24,9 @@ namespace Improbable.Gdk.Core
             return (TConcreteCommandStorage) storage;
         }
 
-        protected override void OnCreateManager()
+        protected override void OnCreateManager(int capacity)
         {
-            base.OnCreateManager();
+            base.OnCreateManager(capacity);
             Enabled = false;
             CreateConcreteCommandStorage();
         }

@@ -1,4 +1,4 @@
-﻿using Improbable.Gdk.Core;
+using Improbable.Gdk.Core;
 using Improbable.Transform;
 using Unity.Collections;
 using Unity.Entities;
@@ -23,7 +23,7 @@ namespace Improbable.Gdk.TransformSynchronization
         private struct Data
         {
             public readonly int Length;
-            public BufferArray<BufferedTransform> TransformBuffer;
+            public ComponentArray<BufferedTransform> TransformBuffer;
             public ComponentDataArray<TransformToSet> CurrentTransform;
             [ReadOnly] public ComponentDataArray<NotAuthoritative<TransformInternal.Component>> DenotesNotAuthoritative;
         }
@@ -35,8 +35,8 @@ namespace Improbable.Gdk.TransformSynchronization
         {
             for (int i = 0; i < data.Length; ++i)
             {
-                var buffer = data.TransformBuffer[i];
-                if (buffer.Length == 0)
+                var buffer = data.TransformBuffer[i].Elements;
+                if (buffer.Count == 0)
                 {
                     continue;
                 }

@@ -44,9 +44,9 @@ namespace Improbable.Gdk.PlayerLifecycle
         [Inject] private SendData sendData;
         [Inject] private ResponseData responseData;
 
-        protected override void OnCreateManager()
+        protected override void OnCreateManager(int capacity)
         {
-            base.OnCreateManager();
+            base.OnCreateManager(capacity);
 
             logDispatcher = World.GetExistingManager<WorkerSystem>().LogDispatcher;
         }

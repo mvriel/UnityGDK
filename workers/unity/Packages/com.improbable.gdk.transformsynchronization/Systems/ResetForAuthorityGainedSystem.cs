@@ -1,4 +1,4 @@
-﻿using Improbable.Gdk.Core;
+using Improbable.Gdk.Core;
 using Improbable.Transform;
 using Unity.Collections;
 using Unity.Entities;
@@ -27,7 +27,7 @@ namespace Improbable.Gdk.TransformSynchronization
             [ReadOnly] public ComponentArray<Rigidbody> Rigidbody;
             [ReadOnly] public ComponentDataArray<TransformInternal.Component> TransformComponent;
             [WriteOnly] public ComponentDataArray<TicksSinceLastTransformUpdate> TicksSinceLastUpdate;
-            [WriteOnly] public BufferArray<BufferedTransform> TransformBuffer;
+            [WriteOnly] public ComponentArray<BufferedTransform> TransformBuffer;
 
             public SubtractiveComponent<NewlyAddedSpatialOSEntity> DenotesNotNewlyAdded;
 
@@ -44,7 +44,7 @@ namespace Improbable.Gdk.TransformSynchronization
             [ReadOnly] public ComponentArray<UnityEngine.Transform> UnityTransform;
             [ReadOnly] public ComponentDataArray<TransformInternal.Component> TransformComponent;
             [WriteOnly] public ComponentDataArray<TicksSinceLastTransformUpdate> TicksSinceLastUpdate;
-            [WriteOnly] public BufferArray<BufferedTransform> TransformBuffer;
+            [WriteOnly] public ComponentArray<BufferedTransform> TransformBuffer;
 
             public SubtractiveComponent<Rigidbody> DenotesNoRigidbody;
             public SubtractiveComponent<NewlyAddedSpatialOSEntity> DenotesNotNewlyAdded;
@@ -69,7 +69,7 @@ namespace Improbable.Gdk.TransformSynchronization
                 rigidbody.MovePosition(t.Location.ToUnityVector3() + worker.Origin);
                 rigidbody.MoveRotation(t.Rotation.ToUnityQuaternion());
                 rigidbody.AddForce(t.Velocity.ToUnityVector3() - rigidbody.velocity, ForceMode.VelocityChange);
-                rigidbodyData.TransformBuffer[i].Clear();
+                rigidbodyData.TransformBuffer[i].Elements.Clear();
                 rigidbodyData.TicksSinceLastUpdate[i] = new TicksSinceLastTransformUpdate();
             }
 
@@ -79,7 +79,7 @@ namespace Improbable.Gdk.TransformSynchronization
                 var unityTransform = transformData.UnityTransform[i];
                 unityTransform.position = t.Location.ToUnityVector3() + worker.Origin;
                 unityTransform.rotation = t.Rotation.ToUnityQuaternion();
-                transformData.TransformBuffer[i].Clear();
+                transformData.TransformBuffer[i].Elements.Clear();
                 transformData.TicksSinceLastUpdate[i] = new TicksSinceLastTransformUpdate();
             }
         }

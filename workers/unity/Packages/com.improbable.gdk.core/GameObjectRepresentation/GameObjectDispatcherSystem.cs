@@ -61,9 +61,9 @@ namespace Improbable.Gdk.GameObjectRepresentation
         private RequiredFieldInjector injector;
         private ILogDispatcher logger;
 
-        protected override void OnCreateManager()
+        protected override void OnCreateManager(int capacity)
         {
-            base.OnCreateManager();
+            base.OnCreateManager(capacity);
 
             FindGameObjectComponentDispatchers();
             GenerateComponentGroups();

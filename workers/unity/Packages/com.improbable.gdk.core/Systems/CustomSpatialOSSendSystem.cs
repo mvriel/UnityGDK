@@ -16,10 +16,9 @@ namespace Improbable.Gdk.Core
 
         private SpatialOSSendSystem spatialOSSendSystem;
 
-        protected override void OnCreateManager()
+        protected override void OnCreateManager(int capacity)
         {
-            base.OnCreateManager();
-
+            base.OnCreateManager(capacity);
             WorkerSystem = World.GetExistingManager<WorkerSystem>();
 
             spatialOSSendSystem = World.GetOrCreateManager<SpatialOSSendSystem>();

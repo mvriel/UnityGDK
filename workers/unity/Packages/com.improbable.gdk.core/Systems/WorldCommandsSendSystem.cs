@@ -52,9 +52,9 @@ namespace Improbable.Gdk.Core
         private WorldCommands.ReserveEntityIds.Storage reserveEntityIdsStorage;
         private WorldCommands.EntityQuery.Storage entityQueryStorage;
 
-        protected override void OnCreateManager()
+        protected override void OnCreateManager(int capacity)
         {
-            base.OnCreateManager();
+            base.OnCreateManager(capacity);
             connection = World.GetExistingManager<WorkerSystem>().Connection;
 
             var requestTracker = World.GetOrCreateManager<CommandRequestTrackerSystem>();
