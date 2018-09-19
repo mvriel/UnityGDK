@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using GdkTestRunner.Modules;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NLog;
 
@@ -33,18 +34,24 @@ namespace GdkTestRunner
         private void PopulateModules()
         {
             var config = File.ReadAllText(options.ConfigurationFilePath);
-            var configJson = JObject.Parse(config);
-
-            var modules = configJson["modules"].Children().ToList();
-
-            foreach (var module in modules)
+            try
             {
-                var moduleInstance = ModuleLibrary.CreateModuleFromType(module["type"].ToString(), module);
-                logger.Info($"Found {moduleInstance.Name}.");
-                testModules.Add(moduleInstance);
-            }
+                var configJson = JObject.Parse(config);
+                var modules = configJson["modules"].Children().ToList();
 
-            logger.Info($"Test module discovery complete. Found: {modules.Count} modules.");
+                foreach (var module in modules)
+                {
+                    var moduleInstance = ModuleLibrary.CreateModuleFromType(module["type"].ToString(), module);
+                    logger.Info($"Found {moduleInstance.Name}.");
+                    testModules.Add(moduleInstance);
+                }
+
+                logger.Info($"Test module discovery complete. Found: {modules.Count} modules.");
+            }
+            catch (JsonReaderException e)
+            {
+                logger.Fatal($"Could not read json at {options.ConfigurationFilePath}. {e.Message}");
+            }
         }
     }
 }
