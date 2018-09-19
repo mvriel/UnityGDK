@@ -8,7 +8,10 @@ namespace GdkTestRunner
     public class GdkTestRunnerOptions
     {
         public string ConfigurationFilePath;
+
         public bool ShouldLogVerbose;
+        public string LogFilePath;
+
         public bool ShouldShowHelp;
         public string HelpString;
 
@@ -16,7 +19,7 @@ namespace GdkTestRunner
         {
         }
 
-        private void Validate()
+        public void Validate()
         {
             if (ConfigurationFilePath == null)
             {
@@ -46,6 +49,11 @@ namespace GdkTestRunner
                     s => options.ShouldLogVerbose = s != null
                 },
                 {
+                    "log-file=",
+                    "The path to the Test Runner log file",
+                    s => options.LogFilePath = Path.GetFullPath(s)
+                },
+                {
                     "h|help",
                     "Show help",
                     s => options.ShouldShowHelp = s != null
@@ -60,7 +68,6 @@ namespace GdkTestRunner
                 options.HelpString = stringWriter.ToString();
             }
 
-            options.Validate();
             return options;
         }
     }

@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+using GdkTestRunner.Model;
 using Newtonsoft.Json.Linq;
 using UnityPaths;
 
@@ -9,27 +10,29 @@ namespace GdkTestRunner.Modules
 {
     public class UnityModule : BaseModule
     {
-        private enum UnityTestPlatform
-        {
-            EDITMODE = 0,
-            PLAYMODE = 1
-        }
-
         public override string JsonModuleIdentifier => "unity";
+        public override string Name { get; }
 
         private readonly string unityProjectPath;
-        private readonly UnityTestPlatform unityTestPlatform;
+        private readonly string unityTestPlatform;
         private readonly string logfilePath;
         private readonly string testResultsPath;
-
-        private string unityTestPlatformStr => unityTestPlatform == UnityTestPlatform.EDITMODE
-            ? "editmode"
-            : "playmode";
 
 
         public UnityModule(JToken jsonContext) : base(jsonContext)
         {
-            // TODO: Parse JSON
+            var parsedJson = jsonContext.ToObject<UnityModuleDefinition>();
+            Name = parsedJson.Name;
+
+            unityProjectPath = parsedJson.UnityDefinition.UnityProjectPath;
+            unityTestPlatform = parsedJson.UnityDefinition.TestPlatform;
+            if (!ValidateTestPlatform())
+            {
+                throw new ArgumentException($"Unknown test platform: {unityTestPlatform}");
+            }
+
+            logfilePath = parsedJson.UnityDefinition.LogFilePath;
+            testResultsPath = parsedJson.UnityDefinition.TestResultsPath;
         }
 
         protected override void BeforeRun()
@@ -50,7 +53,7 @@ namespace GdkTestRunner.Modules
                     "-batchmode",
                     "-projectPath", $"\"{unityProjectPath}\"",
                     "-runTests",
-                    "-testPlatform", $"{unityTestPlatformStr}",
+                    "-testPlatform", $"{unityTestPlatform}",
                     "-logfile", $"\"{logfilePath}\"",
                     "-testResults", $"\"{testResultsPath}\""
                 };
@@ -73,7 +76,7 @@ namespace GdkTestRunner.Modules
                     return process.ExitCode == 0;
                 }
             }
-            catch (Exception e)
+            catch
             {
                 // TODO: Print error.
                 return false;
@@ -128,6 +131,11 @@ namespace GdkTestRunner.Modules
             }
 
             return Path.Combine(unityEditorFolderPath, relativeExePath);
+        }
+
+        private bool ValidateTestPlatform()
+        {
+            return unityTestPlatform == "editmode" || unityTestPlatform == "playmode";
         }
     }
 }

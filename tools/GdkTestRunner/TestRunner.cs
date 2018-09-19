@@ -4,34 +4,28 @@ using System.IO;
 using System.Linq;
 using GdkTestRunner.Modules;
 using Newtonsoft.Json.Linq;
+using NLog;
 
 namespace GdkTestRunner
 {
     public class TestRunner
     {
         private GdkTestRunnerOptions options;
+        private Logger logger;
         private List<BaseModule> testModules = new List<BaseModule>();
 
         public TestRunner(GdkTestRunnerOptions options)
         {
             this.options = options;
+            logger = LogManager.GetCurrentClassLogger();
         }
 
         public void Run()
         {
-            if (options.ShouldShowHelp)
-            {
-                Console.WriteLine(options.HelpString);
-                return;
-            }
-
-            // TODO: Setup logger.
-
             PopulateModules();
 
             foreach (var module in testModules)
             {
-                // TODO: Record failures.
                 module.Run();
             }
         }
@@ -45,8 +39,12 @@ namespace GdkTestRunner
 
             foreach (var module in modules)
             {
-                testModules.Add(ModuleLibrary.CreateModuleFromType(module["type"].ToString(), module));
+                var moduleInstance = ModuleLibrary.CreateModuleFromType(module["type"].ToString(), module);
+                logger.Info($"Found {moduleInstance.Name}.");
+                testModules.Add(moduleInstance);
             }
+
+            logger.Info($"Test module discovery complete. Found: {modules.Count} modules.");
         }
     }
 }

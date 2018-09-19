@@ -9,6 +9,8 @@ namespace GdkTestRunner.Modules
         /// </summary>
         public abstract string JsonModuleIdentifier { get; }
 
+        public abstract string Name { get; }
+
         public BaseModule(JToken jsonContext)
         {
         }
