@@ -102,7 +102,7 @@ namespace Playground.Editor.SnapshotGenerator
 
             var entity = EntityBuilder.Begin()
                 .AddPosition(coords.X, coords.Y, coords.Z, WorkerUtils.UnityGameLogic)
-                .AddMetadata(entityType, WorkerUtils.UnityGameLogic)
+                .AddMetadata(entityType, "coordinator")
                 .SetPersistence(true)
                 .SetReadAcl(WorkerUtils.AllWorkerAttributes)
                 .AddComponent(collisions, WorkerUtils.UnityGameLogic)

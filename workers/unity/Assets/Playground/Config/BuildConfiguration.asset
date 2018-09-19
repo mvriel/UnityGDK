@@ -33,3 +33,12 @@ MonoBehaviour:
     CloudBuildConfig:
       BuildPlatforms: 8
       BuildOptions: 16384
+  - WorkerPlatform:
+      name: FakeClientCoordinator
+    ScenesForWorker: []
+    LocalBuildConfig:
+      BuildPlatforms: 1
+      BuildOptions: 1
+    CloudBuildConfig:
+      BuildPlatforms: 8
+      BuildOptions: 0

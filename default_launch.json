@@ -36,6 +36,26 @@
       "load_balancing": {
         "singleton_worker": {}
       }
+    },
+    {
+      "worker_type": "FakeClient",
+      "permissions": [{
+          "all": {}
+      }],
+      "load_balancing": {
+        "singleton_worker": {}
+      }
+    },
+    {
+      "worker_type": "FakeClientCoordinator",
+      "permissions": [{
+          "all": {}
+      }],
+      "load_balancing": {
+        "auto_hex_grid": {
+          "num_workers": 4
+        }
+      }
     }
   ]
 }
