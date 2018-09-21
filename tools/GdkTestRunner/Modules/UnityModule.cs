@@ -4,6 +4,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using GdkTestRunner.Model;
 using Newtonsoft.Json.Linq;
+using NLog;
 using UnityPaths;
 
 namespace GdkTestRunner.Modules
@@ -18,21 +19,32 @@ namespace GdkTestRunner.Modules
         private readonly string logfilePath;
         private readonly string testResultsPath;
 
+        private readonly Logger logger;
 
-        public UnityModule(JToken jsonContext) : base(jsonContext)
+        public UnityModule()
+        {
+        }
+
+        public UnityModule(GdkTestRunnerOptions options, JToken jsonContext) : base(options, jsonContext)
         {
             var parsedJson = jsonContext.ToObject<UnityModuleDefinition>();
-            Name = parsedJson.Name;
 
-            unityProjectPath = parsedJson.UnityDefinition.UnityProjectPath;
+            Name = parsedJson.Name;
+            unityProjectPath = Path.Combine(Path.GetDirectoryName(options.ConfigurationFilePath),
+                parsedJson.UnityDefinition.UnityProjectPath);
             unityTestPlatform = parsedJson.UnityDefinition.TestPlatform;
+
             if (!ValidateTestPlatform())
             {
                 throw new ArgumentException($"Unknown test platform: {unityTestPlatform}");
             }
 
-            logfilePath = parsedJson.UnityDefinition.LogFilePath;
-            testResultsPath = parsedJson.UnityDefinition.TestResultsPath;
+            var formattedName = Formatter.TitleCaseToKebabCase(parsedJson.Name);
+
+            logfilePath = GetLogFilePath($"{formattedName}-{unityTestPlatform}.log");
+            testResultsPath = GetLogFilePath($"{formattedName}-{unityTestPlatform}-results.xml");
+
+            logger = LogManager.GetCurrentClassLogger();
         }
 
         protected override void BeforeRun()
@@ -58,11 +70,15 @@ namespace GdkTestRunner.Modules
                     "-testResults", $"\"{testResultsPath}\""
                 };
 
-                using (var process = Process.Start(unityPath, string.Join(' ', arguments)))
+                var args = string.Join(' ', arguments);
+
+                logger.Debug($"Running: {unityPath} {args}");
+
+                using (var process = Process.Start(unityPath, args))
                 {
                     if (process == null)
                     {
-                        // TODO: Log and print error.
+                        logger.Error($"Failed to start process - \"{unityPath} {args}\"");
                         return false;
                     }
 
@@ -70,15 +86,16 @@ namespace GdkTestRunner.Modules
 
                     if (process.ExitCode != 0)
                     {
-                        // TODO: Log error.
+                        logger.Error($"{Name} exited with a non-zero exit code. " +
+                            $"Check {logfilePath} and {testResultsPath} for more info.");
                     }
 
                     return process.ExitCode == 0;
                 }
             }
-            catch
+            catch (Exception e)
             {
-                // TODO: Print error.
+                logger.Error($"Exception thrown while testing: {e.Message}\n{e.InnerException.Message}");
                 return false;
             }
             finally
@@ -102,6 +119,9 @@ namespace GdkTestRunner.Modules
             var libraryFolder = Path.Combine(unityProjectPath, "Library");
             var tempFolder = Path.Combine(unityProjectPath, "Temp");
 
+            logger.Debug($"Cleaning {libraryFolder}");
+            logger.Debug($"Cleaning {tempFolder}");
+
             if (Directory.Exists(libraryFolder))
             {
                 Directory.Delete(libraryFolder, true);
@@ -115,7 +135,7 @@ namespace GdkTestRunner.Modules
 
         private string GetUnityExePath(string unityEditorFolderPath)
         {
-            var relativeExePath = string.Empty;
+            string relativeExePath;
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {

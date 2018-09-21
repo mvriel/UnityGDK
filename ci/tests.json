@@ -1,0 +1,28 @@
+{
+    "modules": [
+        {
+            "type": "unity",
+            "name": "Unity GDK Editmode Tests",
+            "parameters": {
+                "project_path": "../workers/unity/",
+                "test_platform": "editmode"
+            }
+        },
+        {
+            "type": "unity",
+            "name": "Unity GDK Playmode Tests",
+            "parameters": {
+                "project_path": "../workers/unity",
+                "test_platform": "playmode"
+            }
+        },
+        {
+            "type": "unity",
+            "name": "Test Project Editmode Tests",
+            "parameters": {
+                "project_path": "../test-project",
+                "test_platform": "editmode"
+            }
+        }
+    ]
+}

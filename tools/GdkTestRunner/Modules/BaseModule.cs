@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using Newtonsoft.Json.Linq;
 
 namespace GdkTestRunner.Modules
@@ -11,7 +13,11 @@ namespace GdkTestRunner.Modules
 
         public abstract string Name { get; }
 
-        public BaseModule(JToken jsonContext)
+        protected BaseModule()
+        {
+        }
+
+        protected BaseModule(GdkTestRunnerOptions options, JToken jsonContext)
         {
         }
 
@@ -22,6 +28,11 @@ namespace GdkTestRunner.Modules
             AfterRun();
 
             return result;
+        }
+
+        protected string GetLogFilePath(string logFileName)
+        {
+            return $"{Environment.CurrentDirectory}/logs/{logFileName}";
         }
 
         protected abstract void BeforeRun();

@@ -23,14 +23,14 @@ namespace GdkTestRunner.Modules
             }
         }
 
-        public static BaseModule CreateModuleFromType(string type, JToken jsonContext)
+        public static BaseModule CreateModuleFromType(string type, JToken jsonContext, GdkTestRunnerOptions options)
         {
             if (!moduleTypeLibrary.TryGetValue(type, out var moduleType))
             {
                 throw new ArgumentException($"Cannot find a module with JSON identifier: {type}");
             }
 
-            return (BaseModule) Activator.CreateInstance(moduleType, jsonContext);
+            return (BaseModule) Activator.CreateInstance(moduleType, options, jsonContext);
         }
     }
 }

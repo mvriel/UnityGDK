@@ -11,10 +11,6 @@ namespace GdkTestRunner.Model
             [JsonProperty("project_path")] public string UnityProjectPath;
 
             [JsonProperty("test_platform")] public string TestPlatform;
-
-            [JsonProperty("log_file_path")] public string LogFilePath;
-
-            [JsonProperty("test_results_path")] public string TestResultsPath;
         }
     }
 }
