@@ -70,7 +70,7 @@ namespace GdkTestRunner.Modules
 
             try
             {
-                if (!RunProcess("dotnet", args))
+                if (!RunProcess(unityPath, args))
                 {
                     logger.Error($"{Name} exited with a non-zero exit code. " +
                         $"Check {logfilePath} and {testResultsPath} for more info.");
