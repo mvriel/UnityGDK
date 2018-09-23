@@ -1,6 +1,20 @@
 {
     "modules": [
         {
+            "type": "dotnet",
+            "name": "Docs Linter Tests",
+            "parameters": {
+                "project_path": "../tools/DocsLinter/DocsLinter.csproj"
+            }
+        },
+        {
+            "type": "dotnet",
+            "name": "Code Generator Tests",
+            "parameters": {
+                "project_path": "../workers/unity/Packages/com.improbable.gdk.tools/.CodeGenerator/GdkCodeGenerator/GdkCodeGenerator.csproj"
+            }
+        },
+        {
             "type": "unity",
             "name": "Unity GDK Editmode Tests",
             "parameters": {
