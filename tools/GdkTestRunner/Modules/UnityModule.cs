@@ -9,9 +9,9 @@ using UnityPaths;
 
 namespace GdkTestRunner.Modules
 {
+    [TestModuleIdentifier("unity")]
     public class UnityModule : BaseModule
     {
-        public override string JsonModuleIdentifier => "unity";
         public override string Name { get; }
 
         private readonly string unityProjectPath;
@@ -20,10 +20,6 @@ namespace GdkTestRunner.Modules
         private readonly string testResultsPath;
 
         private readonly Logger logger;
-
-        public UnityModule()
-        {
-        }
 
         public UnityModule(GdkTestRunnerOptions options, JToken jsonContext) : base(options, jsonContext)
         {

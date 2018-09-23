@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+using NLog;
 
 namespace GdkTestRunner.Modules
 {
@@ -17,9 +18,17 @@ namespace GdkTestRunner.Modules
 
             foreach (var moduleType in moduleTypes)
             {
-                var instance = (BaseModule) Activator.CreateInstance(moduleType);
+                var identifierAttribute = Attribute.GetCustomAttribute(moduleType,
+                    typeof(TestModuleIdentifierAttribute)) as TestModuleIdentifierAttribute;
 
-                moduleTypeLibrary[instance.JsonModuleIdentifier] = moduleType;
+                if (identifierAttribute == null)
+                {
+                    LogManager.GetCurrentClassLogger().Error($"Encountered subclass of {typeof(BaseModule).FullName} " +
+                        $"without {typeof(TestModuleIdentifierAttribute).FullName}");
+                    continue;
+                }
+
+                moduleTypeLibrary[identifierAttribute.Identifier] = moduleType;
             }
         }
 

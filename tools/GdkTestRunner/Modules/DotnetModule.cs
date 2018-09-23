@@ -6,19 +6,15 @@ using NLog;
 
 namespace GdkTestRunner.Modules
 {
+    [TestModuleIdentifier("dotnet")]
     public class DotnetModule : BaseModule
     {
-        public override string JsonModuleIdentifier => "dotnet";
         public override string Name { get; }
 
         private readonly string dotnetProjectPath;
         private readonly string testResultsPath;
 
         private readonly Logger logger;
-
-        public DotnetModule()
-        {
-        }
 
         public DotnetModule(GdkTestRunnerOptions options, JToken jsonContext) : base(options, jsonContext)
         {

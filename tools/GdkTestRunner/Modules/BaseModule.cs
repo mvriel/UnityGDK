@@ -7,16 +7,7 @@ namespace GdkTestRunner.Modules
 {
     public abstract class BaseModule
     {
-        /// <summary>
-        ///     A string that represents the JSON identifier for this module.
-        /// </summary>
-        public abstract string JsonModuleIdentifier { get; }
-
         public abstract string Name { get; }
-
-        protected BaseModule()
-        {
-        }
 
         protected BaseModule(GdkTestRunnerOptions options, JToken jsonContext)
         {
@@ -61,5 +52,15 @@ namespace GdkTestRunner.Modules
         }
 
         protected abstract void PrintHelp();
+    }
+
+    public class TestModuleIdentifierAttribute : Attribute
+    {
+        public string Identifier;
+
+        public TestModuleIdentifierAttribute(string identifier)
+        {
+            Identifier = identifier;
+        }
     }
 }
