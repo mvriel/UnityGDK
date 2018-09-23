@@ -57,40 +57,28 @@ namespace GdkTestRunner.Modules
             var currentDirectory = Environment.CurrentDirectory;
             Environment.CurrentDirectory = unityProjectPath;
 
+            var unityPath = GetUnityExePath(Paths.TryGetUnityPath());
+            var arguments = new[]
+            {
+                "-batchmode",
+                "-projectPath", $"\"{unityProjectPath}\"",
+                "-runTests",
+                "-testPlatform", $"{unityTestPlatform}",
+                "-logfile", $"\"{logfilePath}\"",
+                "-testResults", $"\"{testResultsPath}\""
+            };
+
+            var args = string.Join(' ', arguments);
+
+            logger.Debug($"Running: {unityPath} {args}");
+
             try
             {
-                var unityPath = GetUnityExePath(Paths.TryGetUnityPath());
-                var arguments = new[]
+                if (!RunProcess("dotnet", args))
                 {
-                    "-batchmode",
-                    "-projectPath", $"\"{unityProjectPath}\"",
-                    "-runTests",
-                    "-testPlatform", $"{unityTestPlatform}",
-                    "-logfile", $"\"{logfilePath}\"",
-                    "-testResults", $"\"{testResultsPath}\""
-                };
-
-                var args = string.Join(' ', arguments);
-
-                logger.Debug($"Running: {unityPath} {args}");
-
-                using (var process = Process.Start(unityPath, args))
-                {
-                    if (process == null)
-                    {
-                        logger.Error($"Failed to start process - \"{unityPath} {args}\"");
-                        return false;
-                    }
-
-                    process.WaitForExit();
-
-                    if (process.ExitCode != 0)
-                    {
-                        logger.Error($"{Name} exited with a non-zero exit code. " +
-                            $"Check {logfilePath} and {testResultsPath} for more info.");
-                    }
-
-                    return process.ExitCode == 0;
+                    logger.Error($"{Name} exited with a non-zero exit code. " +
+                        $"Check {logfilePath} and {testResultsPath} for more info.");
+                    return false;
                 }
             }
             catch (Exception e)
@@ -102,6 +90,8 @@ namespace GdkTestRunner.Modules
             {
                 Environment.CurrentDirectory = currentDirectory;
             }
+
+            return true;
         }
 
         protected override void AfterRun()

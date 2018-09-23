@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using Newtonsoft.Json.Linq;
 
@@ -35,9 +36,29 @@ namespace GdkTestRunner.Modules
             return $"{Environment.CurrentDirectory}/logs/{logFileName}";
         }
 
-        protected abstract void BeforeRun();
+        protected bool RunProcess(string exe, string args)
+        {
+            using (var process = Process.Start(exe, args))
+            {
+                if (process == null)
+                {
+                    throw new Exception($"Failed to start process \"{exe} {args}\".");
+                }
+
+                process.WaitForExit();
+                return process.ExitCode == 0;
+            }
+        }
+
+        protected virtual void BeforeRun()
+        {
+        }
+
         protected abstract bool InternalRun();
-        protected abstract void AfterRun();
+
+        protected virtual void AfterRun()
+        {
+        }
 
         protected abstract void PrintHelp();
     }
