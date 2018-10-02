@@ -5,17 +5,31 @@ using UnityEngine;
 
 namespace Improbable.Gdk.Core
 {
+    /// <summary>
+    ///     Convenience wrapper around the WorkerSDK Snapshot API.
+    /// </summary>
     public class Snapshot
     {
         private readonly Dictionary<EntityId, Entity> entities = new Dictionary<EntityId, Entity>();
 
         public int Count => entities.Count;
 
+        /// <summary>
+        ///     Adds an entity to the snapshot
+        /// </summary>
+        /// <remarks>
+        ///    The entity ID is automatically assigned.
+        /// </remarks>
+        /// <param name="entity">The entity to be added to the snapshot.</param>
         public void AddEntity(Entity entity)
         {
             entities[new EntityId(entities.Count + 1)] = entity;
         }
 
+        /// <summary>
+        ///     Writes the snapshot out to a file.
+        /// </summary>
+        /// <param name="path">The file path.</param>
         public void WriteToFile(string path)
         {
             var parameters = new SnapshotParameters
