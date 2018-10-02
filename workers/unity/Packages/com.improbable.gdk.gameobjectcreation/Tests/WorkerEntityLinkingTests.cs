@@ -1,6 +1,9 @@
 using Improbable.Gdk.Core;
-using Improbable.Gdk.Core.Commands;
-using Improbable.Gdk.GameObjectRepresentation;
+using Improbable.Gdk.Core.Components;
+using Improbable.Gdk.Core.GameObjectRepresentation;
+using Improbable.Gdk.Core.GameObjectRepresentation.Injection;
+using Improbable.Gdk.Core.Logging;
+using Improbable.Gdk.Core.GameObjectRepresentation.Injection.Commands;
 using Improbable.Gdk.TestUtils;
 using NUnit.Framework;
 using Unity.Entities;

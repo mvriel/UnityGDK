@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Improbable.Gdk.GameObjectRepresentation
+namespace Improbable.Gdk.Core.GameObjectRepresentation.Injection
 {
     /// <summary>
     ///     Marks MonoBehaviours which want to be enabled only for particular worker types.

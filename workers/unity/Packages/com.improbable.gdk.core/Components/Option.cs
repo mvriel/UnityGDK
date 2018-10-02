@@ -1,6 +1,7 @@
 using System;
+using Improbable.Gdk.Core.Utility;
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Components
 {
     public struct Option<T> : IEquatable<Option<T>>
     {

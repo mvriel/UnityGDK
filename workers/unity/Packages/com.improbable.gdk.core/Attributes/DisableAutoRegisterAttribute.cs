@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Attributes
 {
     /// <summary>
     ///     This attribute denotes that a CodegenAdapter class should not be automatically registered with

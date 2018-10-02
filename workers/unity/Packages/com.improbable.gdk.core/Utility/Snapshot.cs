@@ -3,7 +3,7 @@ using Improbable.Worker;
 using Improbable.Worker.Core;
 using UnityEngine;
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Utility
 {
     public class Snapshot
     {

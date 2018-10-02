@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Improbable.Worker.Core;
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Utility
 {
     public class EntityBuilder
     {

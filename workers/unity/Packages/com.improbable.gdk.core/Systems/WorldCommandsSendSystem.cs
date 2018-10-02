@@ -4,7 +4,7 @@ using Improbable.Worker.Query;
 using Unity.Collections;
 using Unity.Entities;
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Systems
 {
     [DisableAutoCreation]
     [UpdateInGroup(typeof(SpatialOSSendGroup.InternalSpatialOSSendGroup))]

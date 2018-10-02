@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Improbable.Gdk.Core;
+using Improbable.Gdk.Core.Logging;
 using Improbable.Worker.Core;
 using NUnit.Framework;
 using UnityEngine;

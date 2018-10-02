@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Improbable.Gdk.GameObjectRepresentation;
+using Improbable.Gdk.Core.Commands;
+using Improbable.Gdk.GameObjectRepresentation.Injection;
+using Improbable.Gdk.Core.GameObjectRepresentation.ReadersWriters;
+using Improbable.Gdk.Core.Logging;
 using Unity.Entities;
 using Entity = Unity.Entities.Entity;
 
@@ -11,7 +14,7 @@ using Entity = Unity.Entities.Entity;
 #endregion
 
 
-namespace Improbable.Gdk.Core.Commands
+namespace Improbable.Gdk.Core.GameObjectRepresentation.Injection.Commands
 {
     public static partial class WorldCommands
     {
@@ -23,45 +26,54 @@ namespace Improbable.Gdk.Core.Commands
             {
                 private readonly ILogDispatcher logDispatcher;
 
-                private readonly List<Action<ReserveEntityIds.ReceivedResponse>>
+                private readonly List<Action<Core.Commands.WorldCommands.ReserveEntityIds.ReceivedResponse>>
                     reserveEntityIdsDelegates;
 
-                private readonly List<Action<CreateEntity.ReceivedResponse>> createEntityDelegates;
-                private readonly List<Action<DeleteEntity.ReceivedResponse>> deleteEntityDelegates;
-                private readonly List<Action<EntityQuery.ReceivedResponse>> entityQueryDelegates;
+                private readonly List<Action<Core.Commands.WorldCommands.CreateEntity.ReceivedResponse>>
+                    createEntityDelegates;
+
+                private readonly List<Action<Core.Commands.WorldCommands.DeleteEntity.ReceivedResponse>>
+                    deleteEntityDelegates;
+
+                private readonly List<Action<Core.Commands.WorldCommands.EntityQuery.ReceivedResponse>>
+                    entityQueryDelegates;
 
                 private WorldCommandResponseHandler(ILogDispatcher logDispatcher) : base(logDispatcher)
                 {
                     this.logDispatcher = logDispatcher;
-                    reserveEntityIdsDelegates = new List<Action<ReserveEntityIds.ReceivedResponse>>();
-                    createEntityDelegates = new List<Action<CreateEntity.ReceivedResponse>>();
-                    deleteEntityDelegates = new List<Action<DeleteEntity.ReceivedResponse>>();
-                    entityQueryDelegates = new List<Action<EntityQuery.ReceivedResponse>>();
+                    reserveEntityIdsDelegates =
+                        new List<Action<Core.Commands.WorldCommands.ReserveEntityIds.ReceivedResponse>>();
+                    createEntityDelegates =
+                        new List<Action<Core.Commands.WorldCommands.CreateEntity.ReceivedResponse>>();
+                    deleteEntityDelegates =
+                        new List<Action<Core.Commands.WorldCommands.DeleteEntity.ReceivedResponse>>();
+                    entityQueryDelegates = new List<Action<Core.Commands.WorldCommands.EntityQuery.ReceivedResponse>>();
                 }
 
-                public event Action<ReserveEntityIds.ReceivedResponse> OnReserveEntityIdsResponse
-                {
-                    add
+                public event Action<Core.Commands.WorldCommands.ReserveEntityIds.ReceivedResponse>
+                    OnReserveEntityIdsResponse
                     {
-                        if (!VerifyNotDisposed())
+                        add
                         {
-                            return;
-                        }
+                            if (!VerifyNotDisposed())
+                            {
+                                return;
+                            }
 
-                        reserveEntityIdsDelegates.Add(value);
-                    }
-                    remove
-                    {
-                        if (!VerifyNotDisposed())
+                            reserveEntityIdsDelegates.Add(value);
+                        }
+                        remove
                         {
-                            return;
+                            if (!VerifyNotDisposed())
+                            {
+                                return;
+                            }
+
+                            reserveEntityIdsDelegates.Remove(value);
                         }
-
-                        reserveEntityIdsDelegates.Remove(value);
                     }
-                }
 
-                public event Action<CreateEntity.ReceivedResponse> OnCreateEntityResponse
+                public event Action<Core.Commands.WorldCommands.CreateEntity.ReceivedResponse> OnCreateEntityResponse
                 {
                     add
                     {
@@ -83,7 +95,7 @@ namespace Improbable.Gdk.Core.Commands
                     }
                 }
 
-                public event Action<DeleteEntity.ReceivedResponse> OnDeleteEntityResponse
+                public event Action<Core.Commands.WorldCommands.DeleteEntity.ReceivedResponse> OnDeleteEntityResponse
                 {
                     add
                     {
@@ -105,7 +117,7 @@ namespace Improbable.Gdk.Core.Commands
                     }
                 }
 
-                public event Action<EntityQuery.ReceivedResponse> OnEntityQueryResponse
+                public event Action<Core.Commands.WorldCommands.EntityQuery.ReceivedResponse> OnEntityQueryResponse
                 {
                     add
                     {
@@ -127,25 +139,29 @@ namespace Improbable.Gdk.Core.Commands
                     }
                 }
 
-                internal void OnReserveEntityIdsResponseInternal(ReserveEntityIds.ReceivedResponse receivedResponse)
+                internal void OnReserveEntityIdsResponseInternal(
+                    Core.Commands.WorldCommands.ReserveEntityIds.ReceivedResponse receivedResponse)
                 {
                     GameObjectDelegates.DispatchWithErrorHandling(receivedResponse, reserveEntityIdsDelegates,
                         logDispatcher);
                 }
 
-                internal void OnCreateEntityResponseInternal(CreateEntity.ReceivedResponse receivedResponse)
+                internal void OnCreateEntityResponseInternal(
+                    Core.Commands.WorldCommands.CreateEntity.ReceivedResponse receivedResponse)
                 {
                     GameObjectDelegates.DispatchWithErrorHandling(receivedResponse, createEntityDelegates,
                         logDispatcher);
                 }
 
-                internal void OnDeleteEntityResponseInternal(DeleteEntity.ReceivedResponse receivedResponse)
+                internal void OnDeleteEntityResponseInternal(
+                    Core.Commands.WorldCommands.DeleteEntity.ReceivedResponse receivedResponse)
                 {
                     GameObjectDelegates.DispatchWithErrorHandling(receivedResponse, deleteEntityDelegates,
                         logDispatcher);
                 }
 
-                internal void OnEntityQueryResponseInternal(EntityQuery.ReceivedResponse receivedResponse)
+                internal void OnEntityQueryResponseInternal(
+                    Core.Commands.WorldCommands.EntityQuery.ReceivedResponse receivedResponse)
                 {
                     GameObjectDelegates.DispatchWithErrorHandling(receivedResponse, entityQueryDelegates,
                         logDispatcher);

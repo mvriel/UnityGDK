@@ -1,9 +1,11 @@
 ﻿using System;
+using Improbable.Gdk.Core.Components;
+using Improbable.Gdk.Core.Logging;
 using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Systems
 {
     [DisableAutoCreation]
     [UpdateInGroup(typeof(SpatialOSReceiveGroup.InternalSpatialOSReceiveGroup))]

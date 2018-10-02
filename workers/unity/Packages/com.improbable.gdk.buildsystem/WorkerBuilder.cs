@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using Improbable.Gdk.BuildSystem.Utility;
 using Improbable.Gdk.BuildSystem.Configuration;
 using Improbable.Gdk.Core;
+using Improbable.Gdk.Core.Utility;
 using Improbable.Gdk.Tools;
 using UnityEditor;
 using UnityEditor.Build;
@@ -121,7 +122,7 @@ namespace Improbable.Gdk.BuildSystem
                 }
 
                 result.Add(BuildTarget.StandaloneWindows);
-            } 
+            }
             else if ((actualPlatforms & SpatialBuildPlatforms.Windows64) != 0)
             {
                 result.Add(BuildTarget.StandaloneWindows64);
@@ -178,7 +179,7 @@ namespace Improbable.Gdk.BuildSystem
         {
             using (new ShowProgressBarScope($"Package {basePath}"))
             {
-                RedirectedProcess.Run(Common.SpatialBinary, "file", "zip", 
+                RedirectedProcess.Run(Common.SpatialBinary, "file", "zip",
                     $"--output=\"{Path.GetFullPath(zipAbsolutePath)}\"",
                     $"--basePath=\"{Path.GetFullPath(basePath)}\"", "\"**\"",
                     $"--compression={useCompression}");

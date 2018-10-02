@@ -1,6 +1,6 @@
 using System;
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Exceptions
 {
     public enum ConnectionErrorReason
     {

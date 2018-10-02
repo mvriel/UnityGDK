@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Improbable.Gdk.GameObjectRepresentation
+namespace Improbable.Gdk.Core.GameObjectRepresentation.Injection
 {
     /// <summary>
     ///     Stores IInjectables and provides methods suited for the required access patterns: adding / removing by

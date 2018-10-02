@@ -15,7 +15,6 @@ namespace Improbable.Gdk.Tools
         private const string ImprobableJsonDir = "build/ImprobableJson";
 
 
-
         private static readonly string SchemaCompilerRelativePath =
             $"../build/CoreSdk/{Common.CoreSdkVersion}/schema_compiler/schema_compiler";
 

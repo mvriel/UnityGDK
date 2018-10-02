@@ -4,11 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Improbable.Gdk.Core.Config;
+using Improbable.Gdk.Core.Exceptions;
+using Improbable.Gdk.Core.Logging;
+using Improbable.Gdk.Core.Utility;
 using Improbable.Worker.Core;
 using Unity.Entities;
 using UnityEngine;
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Worker
 {
     public class WorkerConnector : MonoBehaviour, IDisposable
     {

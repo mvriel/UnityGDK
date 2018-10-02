@@ -1,6 +1,7 @@
+using Improbable.Gdk.Core.Attributes;
 using Unity.Entities;
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Components
 {
     /// <summary>
     ///     Tag component for marking SpatialOS entities that were just checked-out and still require setup.

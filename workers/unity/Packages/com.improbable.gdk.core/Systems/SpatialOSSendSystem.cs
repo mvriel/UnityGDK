@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Improbable.Gdk.Core.Attributes;
 using Improbable.Gdk.Core.CodegenAdapters;
 using Improbable.Worker.Core;
 using Unity.Entities;
 using UnityEngine.Profiling;
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Systems
 {
     [DisableAutoCreation]
     [AlwaysUpdateSystem]

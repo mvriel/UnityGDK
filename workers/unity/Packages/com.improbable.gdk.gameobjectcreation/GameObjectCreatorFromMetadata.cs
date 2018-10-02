@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
 using Improbable.Gdk.Core;
+using Improbable.Gdk.Core.Logging;
+using Improbable.Gdk.Core.Utility;
 using Improbable.Worker;
 using UnityEngine;
 

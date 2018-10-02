@@ -7,7 +7,7 @@ using Improbable.Worker;
 
 #endregion
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Logging
 {
     public static class LoggingUtils
     {

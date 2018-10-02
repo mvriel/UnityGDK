@@ -1,4 +1,4 @@
-namespace Improbable.Gdk.BuildSystem
+namespace Improbable.Gdk.BuildSystem.Utility
 {
     public static class EditorConfig
     {

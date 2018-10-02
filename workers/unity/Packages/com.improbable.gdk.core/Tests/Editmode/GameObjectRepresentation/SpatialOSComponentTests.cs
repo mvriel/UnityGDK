@@ -1,11 +1,12 @@
-using Improbable.Gdk.GameObjectRepresentation;
+using Improbable.Gdk.Core.GameObjectRepresentation;
+using Improbable.Gdk.Core.Utility;
 using Improbable.Gdk.TestUtils;
 using Improbable.Worker;
 using NUnit.Framework;
 using Unity.Entities;
 using UnityEngine;
 
-namespace Improbable.Gdk.Core.EditmodeTests
+namespace Improbable.Gdk.Core.Tests.EditmodeTests.GameObjectRepresentation
 {
     [TestFixture]
     public class SpatialOSComponentTests

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Improbable.Gdk.Core;
-using Improbable.Worker;
+using Improbable.Gdk.Core.Components;
+using Improbable.Gdk.Core.Logging;
 using Improbable.Worker.Core;
 using UnityEngine;
 
-namespace Improbable.Gdk.GameObjectRepresentation
+namespace Improbable.Gdk.Core.GameObjectRepresentation.ReadersWriters
 {
     public static class GameObjectDelegates
     {

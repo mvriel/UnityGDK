@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Improbable.Gdk.BuildSystem.Utility;
 using UnityEditor;
 
 namespace Improbable.Gdk.BuildSystem.Configuration
@@ -10,13 +11,13 @@ namespace Improbable.Gdk.BuildSystem.Configuration
         public readonly string WorkerType;
 
         public string PackageName => $"{WorkerType}@{BuildTargetName}";
-        
+
         public string BuildScratchDirectory =>
             Path.Combine(EditorPaths.BuildScratchDirectory, PackageName, ExecutableName);
-        
+
         private string BuildTargetName => BuildTargetNames[buildTarget];
         private string ExecutableName => PackageName + BuildPlatformExtensions[buildTarget];
-        
+
         private readonly BuildTarget buildTarget;
 
         private static readonly Dictionary<BuildTarget, string> BuildTargetNames =

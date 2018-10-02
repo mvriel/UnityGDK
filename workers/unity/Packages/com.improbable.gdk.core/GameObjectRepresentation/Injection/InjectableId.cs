@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Improbable.Gdk.GameObjectRepresentation
+﻿namespace Improbable.Gdk.Core.GameObjectRepresentation.Injection
 {
     /// <summary>
     ///     Enum to note what kind of Injectable a specific type is, to be used as part of the InjectableId.

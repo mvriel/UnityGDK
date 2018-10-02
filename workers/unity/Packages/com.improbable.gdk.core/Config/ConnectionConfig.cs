@@ -1,7 +1,8 @@
+using Improbable.Gdk.Core.Exceptions;
 using Improbable.Worker;
 using Improbable.Worker.Core;
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Config
 {
     public abstract class ConnectionConfig
     {

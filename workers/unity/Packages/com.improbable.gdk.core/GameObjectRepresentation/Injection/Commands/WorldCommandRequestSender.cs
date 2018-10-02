@@ -1,4 +1,5 @@
-﻿using Improbable.Gdk.GameObjectRepresentation;
+﻿using Improbable.Gdk.Core.GameObjectRepresentation.ReadersWriters;
+using Improbable.Gdk.Core.Logging;
 using Improbable.Worker;
 using Unity.Entities;
 
@@ -10,7 +11,7 @@ using Unity.Entities;
 
 #endregion
 
-namespace Improbable.Gdk.Core.Commands
+namespace Improbable.Gdk.Core.GameObjectRepresentation.Injection.Commands
 {
     public static partial class WorldCommands
     {
@@ -38,9 +39,9 @@ namespace Improbable.Gdk.Core.Commands
                     }
 
                     var request =
-                        WorldCommands.ReserveEntityIds.CreateRequest(numberOfEntityIds, timeoutMillis, context);
+                        Improbable.Gdk.Core.Commands.WorldCommands.ReserveEntityIds.CreateRequest(numberOfEntityIds, timeoutMillis, context);
 
-                    entityManager.GetComponentData<ReserveEntityIds.CommandSender>(entity)
+                    entityManager.GetComponentData<Improbable.Gdk.Core.Commands.WorldCommands.ReserveEntityIds.CommandSender>(entity)
                         .RequestsToSend.Add(request);
 
                     return request.RequestId;
@@ -55,9 +56,9 @@ namespace Improbable.Gdk.Core.Commands
                     }
 
                     var request =
-                        WorldCommands.CreateEntity.CreateRequest(entityTemplate, entityId, timeoutMillis, context);
+                        Improbable.Gdk.Core.Commands.WorldCommands.CreateEntity.CreateRequest(entityTemplate, entityId, timeoutMillis, context);
 
-                    entityManager.GetComponentData<CreateEntity.CommandSender>(entity)
+                    entityManager.GetComponentData<Improbable.Gdk.Core.Commands.WorldCommands.CreateEntity.CommandSender>(entity)
                         .RequestsToSend.Add(request);
 
                     return request.RequestId;
@@ -70,9 +71,9 @@ namespace Improbable.Gdk.Core.Commands
                         return -1;
                     }
 
-                    var request = WorldCommands.DeleteEntity.CreateRequest(entityId, timeoutMillis, context);
+                    var request = Improbable.Gdk.Core.Commands.WorldCommands.DeleteEntity.CreateRequest(entityId, timeoutMillis, context);
 
-                    entityManager.GetComponentData<DeleteEntity.CommandSender>(entity)
+                    entityManager.GetComponentData<Improbable.Gdk.Core.Commands.WorldCommands.DeleteEntity.CommandSender>(entity)
                         .RequestsToSend.Add(request);
 
                     return request.RequestId;
@@ -86,8 +87,8 @@ namespace Improbable.Gdk.Core.Commands
                         return -1;
                     }
 
-                    var request = WorldCommands.EntityQuery.CreateRequest(entityQuery, timeoutMillis, context);
-                    entityManager.GetComponentData<EntityQuery.CommandSender>(entity)
+                    var request = Improbable.Gdk.Core.Commands.WorldCommands.EntityQuery.CreateRequest(entityQuery, timeoutMillis, context);
+                    entityManager.GetComponentData<Improbable.Gdk.Core.Commands.WorldCommands.EntityQuery.CommandSender>(entity)
                         .RequestsToSend.Add(request);
 
                     return request.RequestId;

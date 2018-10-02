@@ -1,6 +1,6 @@
 ﻿using Unity.Entities;
 
-namespace Improbable.Gdk.GameObjectRepresentation
+namespace Improbable.Gdk.Core.GameObjectRepresentation
 {
     public static class GameObjectRepresentationHelper
     {

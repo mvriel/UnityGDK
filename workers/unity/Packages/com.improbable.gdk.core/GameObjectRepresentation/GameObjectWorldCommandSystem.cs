@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
-using Improbable.Gdk.Core.Commands;
+using Improbable.Gdk.Core.GameObjectRepresentation.Injection.Commands;
+using Improbable.Gdk.Core.GameObjectRepresentation.Injection;
 using Unity.Collections;
 using Unity.Entities;
 
@@ -14,7 +15,7 @@ using Unity.Entities;
 #endregion
 
 
-namespace Improbable.Gdk.GameObjectRepresentation
+namespace Improbable.Gdk.Core.GameObjectRepresentation
 {
     [DisableAutoCreation]
     public class GameObjectWorldCommandSystem : ComponentSystem
@@ -23,7 +24,7 @@ namespace Improbable.Gdk.GameObjectRepresentation
         {
             public readonly int Length;
             [ReadOnly] public EntityArray Entities;
-            [ReadOnly] public ComponentDataArray<WorldCommands.ReserveEntityIds.CommandResponses> CommandResponses;
+            [ReadOnly] public ComponentDataArray<Commands.WorldCommands.ReserveEntityIds.CommandResponses> CommandResponses;
             [ReadOnly] public ComponentArray<GameObjectReference> HasGameObjectReference;
         }
 
@@ -31,7 +32,7 @@ namespace Improbable.Gdk.GameObjectRepresentation
         {
             public readonly int Length;
             [ReadOnly] public EntityArray Entities;
-            [ReadOnly] public ComponentDataArray<WorldCommands.CreateEntity.CommandResponses> CommandResponses;
+            [ReadOnly] public ComponentDataArray<Commands.WorldCommands.CreateEntity.CommandResponses> CommandResponses;
             [ReadOnly] public ComponentArray<GameObjectReference> HasGameObjectReference;
         }
 
@@ -39,7 +40,7 @@ namespace Improbable.Gdk.GameObjectRepresentation
         {
             public readonly int Length;
             [ReadOnly] public EntityArray Entities;
-            [ReadOnly] public ComponentDataArray<WorldCommands.DeleteEntity.CommandResponses> CommandResponses;
+            [ReadOnly] public ComponentDataArray<Commands.WorldCommands.DeleteEntity.CommandResponses> CommandResponses;
             [ReadOnly] public ComponentArray<GameObjectReference> HasGameObjectReference;
         }
 
@@ -47,7 +48,7 @@ namespace Improbable.Gdk.GameObjectRepresentation
         {
             public readonly int Length;
             [ReadOnly] public EntityArray Entities;
-            [ReadOnly] public ComponentDataArray<WorldCommands.EntityQuery.CommandResponses> CommandResponses;
+            [ReadOnly] public ComponentDataArray<Commands.WorldCommands.EntityQuery.CommandResponses> CommandResponses;
             [ReadOnly] public ComponentArray<GameObjectReference> HasGameObjectReference;
         }
 

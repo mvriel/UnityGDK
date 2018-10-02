@@ -1,7 +1,7 @@
 using Unity.Entities;
 using UnityEngine.Experimental.PlayerLoop;
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Systems
 {
     [UpdateBefore(typeof(Update))]
     public class SpatialOSReceiveGroup

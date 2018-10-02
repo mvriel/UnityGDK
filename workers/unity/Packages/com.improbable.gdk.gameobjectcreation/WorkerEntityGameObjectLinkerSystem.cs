@@ -1,4 +1,8 @@
 using Improbable.Gdk.Core;
+using Improbable.Gdk.Core.Components;
+using Improbable.Gdk.Core.GameObjectRepresentation;
+using Improbable.Gdk.Core.Systems;
+using Improbable.Gdk.Core.Utility;
 using Improbable.Gdk.GameObjectRepresentation;
 using Improbable.Worker;
 using Unity.Collections;

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Logging
 {
     public struct LogEvent
     {

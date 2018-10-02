@@ -1,4 +1,6 @@
-namespace Improbable.Gdk.Core
+using Improbable.Gdk.Core.Utility;
+
+namespace Improbable.Gdk.Core.Components
 {
     public interface ISpatialComponentData
     {

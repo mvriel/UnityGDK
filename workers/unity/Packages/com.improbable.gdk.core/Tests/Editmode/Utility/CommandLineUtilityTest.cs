@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using Improbable.Gdk.Core.Utility;
 using NUnit.Framework;
 
-namespace Improbable.Gdk.Core.EditmodeTests
+namespace Improbable.Gdk.Core.Tests.EditmodeTests.Utility
 {
     [TestFixture]
     public class CommandLineUtilityTest

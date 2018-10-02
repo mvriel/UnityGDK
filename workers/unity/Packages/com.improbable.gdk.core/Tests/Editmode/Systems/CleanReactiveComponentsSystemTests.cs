@@ -1,8 +1,10 @@
 using System;
+using Improbable.Gdk.Core.Components;
+using Improbable.Gdk.Core.Systems;
 using NUnit.Framework;
 using Unity.Entities;
 
-namespace Improbable.Gdk.Core.EditmodeTests.Systems
+namespace Improbable.Gdk.Core.Tests.EditmodeTests.Systems
 {
     [TestFixture]
     public class CleanReactiveComponentsSystemTests

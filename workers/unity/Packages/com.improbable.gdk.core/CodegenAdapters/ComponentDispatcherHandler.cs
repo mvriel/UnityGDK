@@ -1,4 +1,6 @@
 using System;
+using Improbable.Gdk.Core.Exceptions;
+using Improbable.Gdk.Core.Logging;
 using Improbable.Worker;
 using Improbable.Worker.Core;
 using Unity.Entities;

@@ -1,6 +1,7 @@
+using Improbable.Gdk.Core.Components;
 using NUnit.Framework;
 
-namespace Improbable.Gdk.Core.EditmodeTests
+namespace Improbable.Gdk.Core.Tests.EditmodeTests.Components
 {
     [TestFixture]
     public class OptionTests

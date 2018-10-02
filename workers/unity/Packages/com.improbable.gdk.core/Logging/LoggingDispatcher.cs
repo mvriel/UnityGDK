@@ -2,7 +2,7 @@ using System;
 using Improbable.Worker.Core;
 using UnityEngine;
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Logging
 {
     /// <summary>
     ///     Logs logEvents to console.

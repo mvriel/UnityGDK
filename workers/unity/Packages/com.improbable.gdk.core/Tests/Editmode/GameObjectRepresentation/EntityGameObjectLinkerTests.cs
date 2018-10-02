@@ -1,4 +1,7 @@
-using Improbable.Gdk.GameObjectRepresentation;
+using Improbable.Gdk.Core.Components;
+using Improbable.Gdk.Core.GameObjectRepresentation;
+using Improbable.Gdk.Core.Logging;
+using Improbable.Gdk.Core.Utility;
 using Improbable.Gdk.TestUtils;
 using Improbable.Worker;
 using NUnit.Framework;
@@ -6,7 +9,7 @@ using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 
-namespace Improbable.Gdk.Core.EditmodeTests
+namespace Improbable.Gdk.Core.Tests.EditmodeTests.GameObjectRepresentation
 {
     [TestFixture]
     public class EntityGameObjectLinkerTests

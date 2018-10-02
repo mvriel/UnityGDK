@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using Improbable.Gdk.Core.GameObjectRepresentation.Injection;
 using Unity.Entities;
 
-namespace Improbable.Gdk.GameObjectRepresentation
+namespace Improbable.Gdk.Core.GameObjectRepresentation
 {
     public abstract class GameObjectComponentDispatcherBase
     {

@@ -1,11 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using Improbable.Gdk.Core.Utility;
 using NUnit.Framework;
 using Improbable.Worker.Core;
-using UnityEngine;
 
-namespace Improbable.Gdk.Core.EditmodeTests
+namespace Improbable.Gdk.Core.Tests.EditmodeTests.Utility
 {
     [TestFixture]
     public class EntityBuilderTest
@@ -71,7 +69,7 @@ namespace Improbable.Gdk.Core.EditmodeTests
             {
                 Assert.DoesNotThrow(() => entity = builder.Build());
             }
-            finally 
+            finally
             {
                 DisposeEntity(entity);
             }

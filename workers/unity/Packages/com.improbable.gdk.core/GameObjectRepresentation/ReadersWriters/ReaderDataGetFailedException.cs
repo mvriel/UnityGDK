@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Improbable.Gdk.GameObjectRepresentation
+namespace Improbable.Gdk.Core.GameObjectRepresentation.ReadersWriters
 {
     public class ReaderDataGetFailedException : Exception
     {

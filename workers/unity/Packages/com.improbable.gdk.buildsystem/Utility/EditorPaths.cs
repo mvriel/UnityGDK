@@ -1,8 +1,7 @@
 using System.IO;
-using System.Linq;
 using UnityEngine;
 
-namespace Improbable.Gdk.BuildSystem
+namespace Improbable.Gdk.BuildSystem.Utility
 {
     /// <summary>
     ///     Contains common directories related to building assets and players.

@@ -1,7 +1,7 @@
 using System;
 using Unity.Entities;
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Attributes
 {
     /// <summary>
     ///     Any component with this attribute will be removed from all entities by the CleanReactiveComponentSystem

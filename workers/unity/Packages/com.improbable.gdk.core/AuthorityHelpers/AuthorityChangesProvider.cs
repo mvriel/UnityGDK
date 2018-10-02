@@ -4,7 +4,7 @@ using System.Linq;
 using Improbable.Worker.Core;
 using Unity.Entities;
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.AuthorityHelpers
 {
     public static class AuthorityChangesProvider
     {

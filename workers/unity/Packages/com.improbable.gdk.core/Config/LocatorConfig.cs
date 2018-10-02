@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using Improbable.Gdk.Core.Utility;
 using Improbable.Worker;
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Config
 {
     public class LocatorConfig : ConnectionConfig
     {

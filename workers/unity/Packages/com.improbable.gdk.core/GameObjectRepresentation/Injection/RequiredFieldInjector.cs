@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Improbable.Gdk.Core;
+using Improbable.Gdk.Core.GameObjectRepresentation.ReadersWriters;
+using Improbable.Gdk.Core.Logging;
 using Unity.Entities;
 using UnityEngine;
 
-namespace Improbable.Gdk.GameObjectRepresentation
+namespace Improbable.Gdk.Core.GameObjectRepresentation.Injection
 {
     /// <summary>
     ///     Retrieves fields with [Require] tags from MonoBehaviours and handles injection into them.
@@ -21,6 +22,7 @@ namespace Improbable.Gdk.GameObjectRepresentation
 
         private readonly Dictionary<Type, List<uint>> componentAuthRequirementsForBehaviours =
             new Dictionary<Type, List<uint>>();
+
         private readonly Dictionary<Type, string[]> workerTypeRequirementsForBehaviours =
             new Dictionary<Type, string[]>();
 
@@ -48,7 +50,8 @@ namespace Improbable.Gdk.GameObjectRepresentation
         public bool IsSpatialOSBehaviour(Type behaviourType)
         {
             EnsureLoaded(behaviourType);
-            return workerTypeRequirementsForBehaviours[behaviourType] != null || fieldInfoCache[behaviourType].Count > 0;
+            return workerTypeRequirementsForBehaviours[behaviourType] != null ||
+                fieldInfoCache[behaviourType].Count > 0;
         }
 
         public Dictionary<InjectableId, IInjectable[]> InjectAllRequiredFields(MonoBehaviour behaviour, Entity entity)

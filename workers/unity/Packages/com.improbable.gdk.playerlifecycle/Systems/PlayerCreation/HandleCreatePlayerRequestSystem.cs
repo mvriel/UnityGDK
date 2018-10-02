@@ -5,6 +5,7 @@ using Improbable.PlayerLifecycle;
 using Improbable.Worker.Core;
 using Unity.Collections;
 using Unity.Entities;
+using WorldCommands = Packages.com.improbable.gdk.core.GameObjectRepresentation.Commands.WorldCommands;
 
 namespace Improbable.Gdk.PlayerLifecycle
 {

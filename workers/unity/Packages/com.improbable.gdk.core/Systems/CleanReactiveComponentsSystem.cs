@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Improbable.Gdk.Core.Attributes;
 using Improbable.Gdk.Core.CodegenAdapters;
 using Unity.Entities;
 using UnityEngine.Profiling;
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Systems
 {
     /// <summary>
     ///     Removes GDK reactive components and components with attribute RemoveAtEndOfTick from all entities
@@ -128,7 +129,7 @@ namespace Improbable.Gdk.Core
                 }
             }
 
-            Profiler.EndSample();			
+            Profiler.EndSample();
         }
 
         private struct ComponentCleanup

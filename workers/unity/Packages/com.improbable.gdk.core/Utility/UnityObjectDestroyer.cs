@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Utility
 {
     /// <summary>
     ///     Provides a helper method for calling Object.DestroyImmediate() instead of Object.Destroy() in EditMode unit tests.

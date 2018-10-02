@@ -1,8 +1,9 @@
 using System;
-using Improbable.Gdk.Core;
+using Improbable.Gdk.Core.GameObjectRepresentation.Injection;
+using Improbable.Gdk.Core.Logging;
 using UnityEngine;
 
-namespace Improbable.Gdk.GameObjectRepresentation
+namespace Improbable.Gdk.Core.GameObjectRepresentation.ReadersWriters
 {
     public class RequirableBase : IInjectable, IDisposable
     {

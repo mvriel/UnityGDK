@@ -4,7 +4,7 @@ using System.Linq;
 using Improbable.Gdk.Core.Commands;
 using Unity.Entities;
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Systems
 {
     [DisableAutoCreation]
     public class CommandRequestTrackerSystem : ComponentSystem

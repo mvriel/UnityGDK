@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using Improbable.Gdk.Core;
-using Improbable.Worker;
+using Improbable.Gdk.Core.AuthorityHelpers;
+using Improbable.Gdk.Core.Components;
+using Improbable.Gdk.Core.Logging;
+using Improbable.Gdk.GameObjectRepresentation.ReadersWriters;
 using Improbable.Worker.Core;
 using Unity.Entities;
 using UnityEngine;
 using Entity = Unity.Entities.Entity;
 
-namespace Improbable.Gdk.GameObjectRepresentation
+namespace Improbable.Gdk.Core.GameObjectRepresentation.ReadersWriters
 {
     public abstract class ReaderWriterBase<TSpatialComponentData, TComponentUpdate>
         : RequirableBase, IWriter<TSpatialComponentData, TComponentUpdate>

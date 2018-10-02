@@ -1,5 +1,9 @@
 using System;
 using System.Threading.Tasks;
+using Improbable.Gdk.Core.Config;
+using Improbable.Gdk.Core.Exceptions;
+using Improbable.Gdk.Core.Logging;
+using Improbable.Gdk.Core.Systems;
 using Improbable.Gdk.GameObjectRepresentation;
 using Improbable.Worker;
 using Improbable.Worker.Core;
@@ -7,7 +11,7 @@ using Unity.Entities;
 using UnityEngine;
 using Entity = Unity.Entities.Entity;
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Worker
 {
     public class Worker : IDisposable
     {

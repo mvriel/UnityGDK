@@ -1,6 +1,5 @@
 using System.Linq;
 using UnityEditor;
-using UnityEngine;
 
 namespace Improbable.Gdk.BuildSystem.Configuration
 {

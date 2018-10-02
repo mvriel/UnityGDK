@@ -1,4 +1,5 @@
 ﻿using System;
+using Improbable.Gdk.Core.Logging;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;

@@ -1,6 +1,4 @@
-using Unity.Entities;
-
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Components
 {
     public interface ISpatialComponentUpdate
     {

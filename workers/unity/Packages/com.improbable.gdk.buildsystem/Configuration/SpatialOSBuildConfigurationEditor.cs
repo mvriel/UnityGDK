@@ -196,7 +196,8 @@ namespace Improbable.Gdk.BuildSystem.Configuration
                     {
                         var targetBitValue = enumValue.ToInt32(NumberFormatInfo.CurrentInfo);
                         var hasFlag = (sourceBitValue & targetBitValue) != 0;
-                        var newFlag = EditorGUILayout.ToggleLeft(enumValue.ToString(CultureInfo.InvariantCulture), hasFlag);
+                        var newFlag =
+                            EditorGUILayout.ToggleLeft(enumValue.ToString(CultureInfo.InvariantCulture), hasFlag);
                         if (hasFlag != newFlag)
                         {
                             source = (TEnum) (object) (sourceBitValue ^ targetBitValue);
@@ -228,7 +229,8 @@ namespace Improbable.Gdk.BuildSystem.Configuration
             using (IndentLevelScope(1))
             {
                 EditorGUI.BeginChangeCheck();
-                var showBuildOptions = EditorGUILayout.Foldout(environmentConfiguration.ShowBuildOptions, "Build Options");
+                var showBuildOptions =
+                    EditorGUILayout.Foldout(environmentConfiguration.ShowBuildOptions, "Build Options");
                 var newBuildOptions = environmentConfiguration.BuildOptions;
                 if (showBuildOptions)
                 {
@@ -305,8 +307,8 @@ namespace Improbable.Gdk.BuildSystem.Configuration
             }
 
             return string.Join(", ", enumValues
-                    .Where(enumValue => (value & enumValue) != 0)
-                    .Select(BuildPlatformToString).ToArray());
+                .Where(enumValue => (value & enumValue) != 0)
+                .Select(BuildPlatformToString).ToArray());
         }
 
         private void ConfigureBuildPlatforms(BuildEnvironmentConfig environmentConfiguration)

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Improbable.Gdk.GameObjectRepresentation
+namespace Improbable.Gdk.Core.GameObjectRepresentation.Injection
 {
     /// <summary>
     ///     Marks fields of MonoBehaviours that require an Injectable to be injected into them.

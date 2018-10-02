@@ -1,6 +1,5 @@
 using System;
 using UnityEditor;
-using UnityEngine.Serialization;
 
 namespace Improbable.Gdk.BuildSystem.Configuration
 {
@@ -12,7 +11,7 @@ namespace Improbable.Gdk.BuildSystem.Configuration
 
         public BuildEnvironmentConfig LocalBuildConfig = new BuildEnvironmentConfig();
         public BuildEnvironmentConfig CloudBuildConfig = new BuildEnvironmentConfig();
-        
+
         [NonSerialized] public bool ShowFoldout = true;
 
         public BuildEnvironmentConfig GetEnvironmentConfig(BuildEnvironment targetEnvironment)

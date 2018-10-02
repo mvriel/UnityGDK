@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using Improbable.Gdk.Core.Utility;
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Config
 {
     public class ReceptionistConfig : ConnectionConfig
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Improbable.Gdk.GameObjectRepresentation
+namespace Improbable.Gdk.GameObjectRepresentation.ReadersWriters
 {
     public class WriterDataUpdateFailedException : Exception
     {

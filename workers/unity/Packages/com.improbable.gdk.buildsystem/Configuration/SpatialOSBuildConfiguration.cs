@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Improbable.Gdk.BuildSystem.Utility;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,12 +9,12 @@ namespace Improbable.Gdk.BuildSystem.Configuration
 {
     [CreateAssetMenu(fileName = "SpatialOS Build Configuration", menuName = EditorConfig.BuildConfigurationMenu)]
     public class SpatialOSBuildConfiguration : ScriptableSingleton<SpatialOSBuildConfiguration>
-    {        
-        [SerializeField] public List<WorkerBuildConfiguration> WorkerBuildConfigurations = 
+    {
+        [SerializeField] public List<WorkerBuildConfiguration> WorkerBuildConfigurations =
             new List<WorkerBuildConfiguration>();
-        
+
         [SerializeField] private bool isInitialised;
-        
+
         public BuildEnvironmentConfig GetEnvironmentConfigForWorker(string workerType, BuildEnvironment environment)
         {
             var config = WorkerBuildConfigurations.FirstOrDefault(x => x.WorkerType == workerType);
@@ -32,7 +33,7 @@ namespace Improbable.Gdk.BuildSystem.Configuration
                 .Select(AssetDatabase.GetAssetPath)
                 .ToArray();
         }
-        
+
         internal void UpdateEditorScenesForBuild()
         {
             EditorBuildSettings.scenes =

@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Linq;
+using Improbable.Gdk.Core.Attributes;
 using Improbable.Gdk.Core.CodegenAdapters;
 using Improbable.Gdk.Core.Commands;
+using Improbable.Gdk.Core.Components;
+using Improbable.Gdk.Core.Exceptions;
+using Improbable.Gdk.Core.Logging;
+using Improbable.Gdk.Core.Systems;
 using Improbable.Gdk.TestUtils;
 using Improbable.Worker;
 using Improbable.Worker.Core;
@@ -10,7 +15,7 @@ using Unity.Entities;
 using UnityEngine;
 using Entity = Unity.Entities.Entity;
 
-namespace Improbable.Gdk.Core.EditmodeTests.Systems
+namespace Improbable.Gdk.Core.Tests.EditmodeTests.Systems
 {
     [TestFixture]
     public class SpatialOSReceiveSystemTests

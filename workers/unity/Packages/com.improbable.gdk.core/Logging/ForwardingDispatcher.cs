@@ -4,7 +4,7 @@ using Improbable.Worker;
 using Improbable.Worker.Core;
 using UnityEngine;
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Logging
 {
     /// <summary>
     ///     Forwards logEvents and exceptions to the SpatialOS Console and logs locally.

@@ -1,6 +1,7 @@
+using Improbable.Gdk.Core.Components;
 using Unity.Entities;
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.AuthorityHelpers
 {
     public struct Authoritative<T> : IComponentData where T : ISpatialComponentData
     {

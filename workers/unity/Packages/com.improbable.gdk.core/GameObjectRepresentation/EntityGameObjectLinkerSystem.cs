@@ -1,8 +1,7 @@
 using Improbable.Gdk.Core;
 using Unity.Entities;
-using UnityEngine;
 
-namespace Improbable.Gdk.GameObjectRepresentation
+namespace Improbable.Gdk.Core.GameObjectRepresentation
 {
     [DisableAutoCreation]
     public class EntityGameObjectLinkerSystem : ComponentSystem

@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using Improbable.Gdk.Core.Config;
+using Improbable.Gdk.Core.Exceptions;
 using Improbable.Worker;
 using NUnit.Framework;
 
-namespace Improbable.Gdk.Core.EditmodeTests
+namespace Improbable.Gdk.Core.Tests.EditmodeTests.Config
 {
     [TestFixture]
     public class LocatorConfigTests

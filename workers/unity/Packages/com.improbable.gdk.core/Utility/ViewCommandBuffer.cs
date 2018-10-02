@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Improbable.Gdk.Core.Logging;
 using Unity.Entities;
 using UnityEngine;
 
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Utility
 {
     /// <summary>
     ///     This class is for when a user wants to Add/Remove a Component (not

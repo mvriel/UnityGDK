@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
-using Improbable.Gdk.Core;
+using Improbable.Gdk.Core.Components;
+using Improbable.Gdk.Core.Logging;
+using Improbable.Gdk.Core.Utility;
 using Improbable.Worker;
 using Unity.Entities;
 using UnityEngine;
 
-namespace Improbable.Gdk.GameObjectRepresentation
+namespace Improbable.Gdk.Core.GameObjectRepresentation
 {
     public class EntityGameObjectLinker
     {

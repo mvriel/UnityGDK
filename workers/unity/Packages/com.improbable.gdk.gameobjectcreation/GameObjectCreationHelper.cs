@@ -1,5 +1,7 @@
 using System;
 using Improbable.Gdk.Core;
+using Improbable.Gdk.Core.Components;
+using Improbable.Gdk.Core.Logging;
 using Unity.Entities;
 using UnityEngine;
 

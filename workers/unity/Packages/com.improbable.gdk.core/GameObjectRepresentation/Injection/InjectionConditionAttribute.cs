@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Improbable.Gdk.GameObjectRepresentation
+namespace Improbable.Gdk.Core.GameObjectRepresentation.Injection
 {
     /// <summary>
     ///     Used to denote when a specific IInjectable type is ready to be created.

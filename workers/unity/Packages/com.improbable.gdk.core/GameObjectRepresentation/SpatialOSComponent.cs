@@ -1,9 +1,8 @@
-using Improbable.Gdk.Core;
 using Improbable.Worker;
 using Unity.Entities;
 using UnityEngine;
 
-namespace Improbable.Gdk.GameObjectRepresentation
+namespace Improbable.Gdk.Core.GameObjectRepresentation
 {
     public class SpatialOSComponent : MonoBehaviour
     {
@@ -59,7 +58,8 @@ namespace Improbable.Gdk.GameObjectRepresentation
                 return false;
             }
 
-            var retrievedGameObject = entityManager.GetComponentObject<GameObjectReference>(component.Entity).GameObject;
+            var retrievedGameObject =
+                entityManager.GetComponentObject<GameObjectReference>(component.Entity).GameObject;
             if (linkedGameObject != retrievedGameObject)
             {
                 return false;
@@ -67,7 +67,6 @@ namespace Improbable.Gdk.GameObjectRepresentation
 
             entityId = component.SpatialEntityId;
             return true;
-
         }
     }
 }

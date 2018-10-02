@@ -1,4 +1,4 @@
-namespace Improbable.Gdk.Core
+namespace Improbable.Gdk.Core.Utility
 {
     public static class CommandRequestIdGenerator
     {

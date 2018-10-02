@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
-using Improbable.Gdk.Core;
 using System.Linq;
-using Improbable.Worker.Core;
+using Improbable.Gdk.Core.Logging;
 using UnityEngine;
 using Entity = Unity.Entities.Entity;
 
-namespace Improbable.Gdk.GameObjectRepresentation
+namespace Improbable.Gdk.Core.GameObjectRepresentation.Injection
 {
     /// <summary>
     ///     Keeps track of Component availability for MonoBehaviours on a particular GameObject and decides when
@@ -194,20 +193,20 @@ namespace Improbable.Gdk.GameObjectRepresentation
             MarkComponentRequirementUnsatisfied(relevantReaderSpatialOSBehaviours);
         }
 
-        public void ChangeAuthority(uint componentId, Authority authority)
+        public void ChangeAuthority(uint componentId, Improbable.Worker.Core.Authority authority)
         {
             if (!behavioursRequiringComponentsWithAuth.ContainsKey(componentId))
             {
                 return;
             }
 
-            if (authority == Authority.Authoritative)
+            if (authority == Improbable.Worker.Core.Authority.Authoritative)
             {
                 // Mark writer components ready in relevant SpatialOSBehaviours
                 var relevantWriterSpatialOSBehaviours = behavioursRequiringComponentsWithAuth[componentId];
                 MarkComponentRequirementSatisfied(relevantWriterSpatialOSBehaviours);
             }
-            else if (authority == Authority.NotAuthoritative)
+            else if (authority == Improbable.Worker.Core.Authority.NotAuthoritative)
             {
                 // Mark writer components not ready in relevant SpatialOSBehaviours
                 var relevantWriterSpatialOSBehaviours = behavioursRequiringComponentsWithAuth[componentId];

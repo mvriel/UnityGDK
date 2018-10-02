@@ -1,11 +1,14 @@
-﻿using Improbable.Gdk.Core.CodegenAdapters;
+﻿using Improbable.Gdk.Core.Attributes;
+using Improbable.Gdk.Core.CodegenAdapters;
+using Improbable.Gdk.Core.Logging;
+using Improbable.Gdk.Core.Systems;
 using Improbable.Gdk.TestUtils;
 using Improbable.Worker.Core;
 using NUnit.Framework;
 using Unity.Entities;
 using UnityEngine;
 
-namespace Improbable.Gdk.Core.EditmodeTests.Systems
+namespace Improbable.Gdk.Core.Tests.EditmodeTests.Systems
 {
     [TestFixture]
     public class SpatialOSSendSystemTests

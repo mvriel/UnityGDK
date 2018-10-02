@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Improbable.Gdk.Core.Utility;
 using Improbable.Worker;
 using Improbable.Worker.Core;
 using Improbable.Worker.Query;
