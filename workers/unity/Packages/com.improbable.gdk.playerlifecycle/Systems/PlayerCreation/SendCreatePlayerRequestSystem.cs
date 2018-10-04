@@ -60,11 +60,10 @@ namespace Improbable.Gdk.PlayerLifecycle
 
             for (var i = 0; i < sendData.Length; ++i)
             {
-                var request = new CreatePlayerRequestType(new Improbable.Vector3f { X = 0, Y = 0, Z = 0 });
+                var request = PlayerLifecycleConfig.GetPlayerCreationData();
                 var createPlayerRequest = PlayerCreator.CreatePlayer.CreateRequest(playerCreatorEntityId, request);
 
-                sendData.RequestSenders[i].RequestsToSend
-                    .Add(createPlayerRequest);
+                sendData.RequestSenders[i].RequestsToSend.Add(createPlayerRequest);
                 PostUpdateCommands.RemoveComponent<ShouldRequestPlayerTag>(sendData.Entities[i]);
             }
 

@@ -6,7 +6,10 @@ namespace Improbable.Gdk.PlayerLifecycle
     public delegate EntityTemplate GetPlayerEntityTemplateDelegate(
         string clientWorkerId,
         List<string> clientAttributeSet,
-        Vector3f position);
+        global::Improbable.PlayerLifecycle.CreatePlayerRequestType payload
+    );
+
+    public delegate global::Improbable.PlayerLifecycle.CreatePlayerRequestType GetPlayerCreationDataDelegate();
 
     public static class PlayerLifecycleConfig
     {
@@ -14,5 +17,6 @@ namespace Improbable.Gdk.PlayerLifecycle
         public const int MaxNumFailedPlayerHeartbeats = 2;
 
         public static GetPlayerEntityTemplateDelegate CreatePlayerEntityTemplate;
+        public static GetPlayerCreationDataDelegate GetPlayerCreationData;
     }
 }

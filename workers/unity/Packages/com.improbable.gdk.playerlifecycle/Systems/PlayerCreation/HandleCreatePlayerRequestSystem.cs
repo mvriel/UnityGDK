@@ -49,8 +49,7 @@ namespace Improbable.Gdk.PlayerLifecycle
                         throw new InvalidOperationException(Errors.PlayerEntityTemplateNotFound);
                     }
 
-                    var playerEntity = PlayerLifecycleConfig.CreatePlayerEntityTemplate(request.CallerWorkerId,
-                        request.CallerAttributeSet, request.Payload.Position);
+                    var playerEntity = PlayerLifecycleConfig.CreatePlayerEntityTemplate(request.CallerWorkerId, request.CallerAttributeSet, request.Payload);
                     createEntitySender.RequestsToSend.Add(WorldCommands.CreateEntity.CreateRequest
                     (
                         playerEntity,

@@ -12,7 +12,7 @@ namespace Playground
     public static class PlayerTemplate
     {
         public static EntityTemplate CreatePlayerEntityTemplate(string workerId, List<string> clientAttributeSet,
-            Improbable.Vector3f position)
+            global::Improbable.PlayerLifecycle.CreatePlayerRequestType payload)
         {
             var clientAttribute = clientAttributeSet.First(attribute => attribute != WorkerUtils.UnityClient);
 
@@ -29,7 +29,7 @@ namespace Playground
             var cubeSpawner = CubeSpawner.Component.CreateSchemaComponentData(new List<EntityId>());
 
             var entityBuilder = EntityBuilder.Begin()
-                .AddPosition(0, 0, 0, WorkerUtils.UnityGameLogic)
+                .AddPosition(payload.Position.X, payload.Position.Y, payload.Position.Z, WorkerUtils.UnityGameLogic)
                 .AddMetadata("Character", WorkerUtils.UnityGameLogic)
                 .SetPersistence(false)
                 .SetReadAcl(WorkerUtils.AllWorkerAttributes)
